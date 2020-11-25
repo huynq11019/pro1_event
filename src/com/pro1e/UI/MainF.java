@@ -31,14 +31,14 @@ public class MainF extends javax.swing.JFrame {
     public MainF() { //mở là màn hình chính hay không phải màn hình chính  
         initComponents();
         this.setLocationRelativeTo(null);
-openNol();
+        openNol();
     }
 
     public void openNol() {
         openMenu(new listMenu());
         pnMEONU.setBackground(new Color(0, 102, 204));
-          pnthongtin.setBackground(new Color(0, 102, 204));
-            pnauth.setBackground(new Color(0, 102, 204));
+        pnthongtin.setBackground(new Color(0, 102, 204));
+        pnauth.setBackground(new Color(0, 102, 204));
         openForm(new HomeMenu(this));
     }
 
@@ -192,14 +192,14 @@ openNol();
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jButton1.setText("button 1");
+        jButton1.setText("Home");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("button 2");
+        jButton2.setText("back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -220,7 +220,7 @@ openNol();
                 .addComponent(jButton1)
                 .addGap(49, 49, 49)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 662, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 692, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         titleLayout.setVerticalGroup(
@@ -271,11 +271,11 @@ openNol();
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    openNol();    // TODO add your handling code here:
+        openNol();    // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-openSUKIEN();        // TODO add your handling code here:
+        openSUKIEN();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

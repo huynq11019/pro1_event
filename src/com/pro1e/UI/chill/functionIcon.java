@@ -9,14 +9,19 @@ import com.pro1e.UI.MainF;
 import com.pro1e.UI.QLnhiemvu;
 import com.pro1e.UI.chill.*;
 import com.pro1e.utils.Xfile;
+import com.pro1e.utils.auth;
 import com.pro1e.utils.magbox;
+import duan1.model.SuKien;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.event.AncestorListener;
 
 /**
@@ -24,17 +29,18 @@ import javax.swing.event.AncestorListener;
  * @author huyNQph11019
  */
 public class functionIcon extends javax.swing.JPanel implements ActionListener {
-
+    
     private JPanel chucNang, parent;
     MainF root;
+    SuKien ev;
 
     /**
      * Creates new form functionIcon
      */
-    public functionIcon(String pathimg, String tenCN, MainF pa, JPanel cn) { // tham số đầu vào là root mainf, và pannel chức năng 
-        this.chucNang = cn;
-        this.root = pa;
+    public functionIcon(String pathimg, String tenCN, MainF pa) { // tham số đầu vào là root mainf, và pannel chức năng 
 
+        this.root = pa;
+        
         initComponents();
         intnit(tenCN, Xfile.read(pathimg));  // đọc file qua đường dẫn
         lbicon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -42,9 +48,28 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
                 showcn(evt);
             }
         });
-
+        
     }
-
+    
+    public functionIcon(String TenchucNang, MainF root, SuKien ev) { // gán chức năng theo form jpannel qNV
+      
+        initComponents();
+        this.ev = ev;
+        this.root = root;
+        
+//        this.lbicon = Xfile.read("đường dẫn ");
+        this.lbtencn.setText(TenchucNang);  
+         lbicon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                showcn(evt);
+            }
+        });
+    }
+    
+   
+    
+  
+    
     public void intnit(String tencn, ImageIcon icon) {
         lbtencn.setText(tencn);
         lbicon.setIcon(icon);
@@ -54,8 +79,9 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
 //            }
 //        });
     }
-
+    
     public void showcn(java.awt.event.MouseEvent evt) {
+        auth.curSUKIEN = ev;
         root.openForm(new QLnhiemvu());
     }
 //    ImageIcon iconF (String path){
@@ -108,5 +134,5 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

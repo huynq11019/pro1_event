@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class JDBChelper {
 //    tạo kết nối
 
-    static String sql = "jdbc:sqlserver://localhost:1433;database=BIGCITY";
+    static String sql = "jdbc:sqlserver://localhost:1433;database=PRO1_E1";
     static String user = "sa";
     static String pass = "123123";
     static String dri = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -48,7 +48,7 @@ public class JDBChelper {
         return null;
     }
 // trả về 1 statement
-    public static PreparedStatement getStm(String sql, Object... args) { 
+ public static PreparedStatement getStm(String sql, Object... args) { // lấy statement
         Connection kon = cnn();
 
         try {
@@ -67,6 +67,7 @@ public class JDBChelper {
         }
         return null;
     }
+
 
     // query-> resultSet
     public static ResultSet query(String sql, Object... args) {

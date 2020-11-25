@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
 
     private final String insert_sql = "INSERT INTO NHANVIEN VALUES(?,?,?,?,?,?,?,?)";
-    private final String update_sql = "UPDATE NHANVIEN SET TENNV=?, IDBAN=?, EMAIL=?,SDT=?,SDT=? ,CMT=? ,  MATKHAU=?, HINH=?,QUYEN=? WHERE IDNV=?";
+    private final String update_sql = "UPDATE NHANVIEN SET TENNV=?, IDBAN=?, EMAIL=?,SDT=? ,CMT=? ,  MATKHAU=?, HINH=?,QUYEN=? WHERE IDNV=?";
     private final String delete_sql ="delete from NHANVIEN where IDNV =?";
     private final String select_all = "select * from NHANVIEN";
     private final String select_byid = "select * from NHANVIEN where IDNV =?";
@@ -51,15 +51,35 @@ public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
         List<NhanVien> nv = selectbySQL(select_byid, id);
         return nv.get(0);
     }
-
+    public NhanVien selectByeDT(String email){
+      String sqla = "select * from NHANVIEN where  SDT like ? or  EMAIL like ?";
+//        List<NhanVien> lit =  selectbySQL(sqla, email , email);
+//        System.out.println(lit.get(0));
+//        return lit.get(0);
+         List<NhanVien> nv = new ArrayList<>();
+       nv = this.selectbySQL(sqla, email,email);
+        if (nv.isEmpty()) {// kiểm tra có dữ liệu không
+            return null;
+        }
+        return nv.get(0);
+    }
     @Override
     public List<NhanVien> selectbySQL(String sql, Object... args) {
         List<NhanVien> lsv = new ArrayList<>();
         try {
             ResultSet rs = JDBChelper.query(sql, args);
             while (rs.next()) {
-                lsv.add(new NhanVien(rs.getString("MATKHAU"), rs.getString("TENNV"), rs.getString("HINH"), rs.getString("IDBAN"),
-                         rs.getString("EMAIL"), rs.getString("SDT"), rs.getString("CMT"), rs.getInt("QUYEN"), rs.getInt("IDNV")));
+               NhanVien nv = new NhanVien();
+               nv.setManv(rs.getInt("IDNV"));
+               nv.setTenNV(rs.getString("TENNV"));
+               nv.setIdBan(rs.getString("IDBAN"));
+               nv.setEmail(rs.getString("EMAIL"));
+               nv.setSdt(rs.getString("SDT"));
+               nv.setCmnd(rs.getString("CMT"));
+               nv.setMatKhau(rs.getString("MATKHAU"));
+               nv.setHinh(rs.getString("HINH"));
+               nv.setQuyen(rs.getInt("QUYEN"));
+               lsv.add(nv);
             }
             rs.getStatement().getConnection().close();
             return lsv;

@@ -12,6 +12,7 @@ import java.util.Date;
  *
  * @author nguye
  */
+
 public class SuKien {
     private int IDSK, idPhong;
     private String tenSK,moTa;
@@ -77,6 +78,11 @@ public class SuKien {
 
     public void setNgayKetThuc(String ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
+    }
+
+    @Override
+    public String toString() {
+        return "SuKien{" + "IDSK=" + IDSK + ", idPhong=" + idPhong + ", tenSK=" + tenSK + ", moTa=" + moTa + ", ngayTao=" + ngayTao + ", ngayKetThuc=" + ngayKetThuc + '}';
     }
 
     

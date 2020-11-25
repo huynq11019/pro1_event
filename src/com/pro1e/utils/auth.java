@@ -5,10 +5,30 @@
  */
 package com.pro1e.utils;
 
+import duan1.model.NhanVien;
+import duan1.model.Phong;
+import duan1.model.SuKien;
+
 /**
  *
  * @author huyNQph11019
  */
 public class auth {
-    
+
+    //phòng ban hiện tại
+    public static Phong curentPhong;
+    public static NhanVien curentNVien;
+
+    public static boolean islogin() {
+        return auth.curentNVien!= null;
+    }
+
+    public static void clear() {
+        auth.curentNVien= null;
+    }
+
+    public static int IDPHONGnv() {
+        return auth.curentNVien.getIdphong();
+    }
+    public static SuKien curSUKIEN;
 }

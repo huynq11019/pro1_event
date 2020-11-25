@@ -4,25 +4,36 @@
  * and open the template in the editor.
  */
 package com.pro1e.UI;
+
+import com.pro1e.DAO.SukienDAO;
 import com.pro1e.UI.chill.functionIcon;
 import duan1.model.SuKien;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  *
  * @author huyNQph11019
  */
 public class QLsukien extends javax.swing.JPanel {
 
+    MainF ro;
     /**
-     * Creates new form QLsukien
+     * Creates new form QLsukien s
      */
-    List<SuKien> lsk = new ArrayList<>();
+    SukienDAO DAOSK = new SukienDAO();
+
+    List<SuKien> lsk= DAOSK.selectall();
+
     public QLsukien(MainF root) {
         initComponents();
-        this.add(new functionIcon("icons8_add_new_64px.png", " SỰ KIỆN 1",root,new QLnhiemvu()));
+        this.ro = root;
+        loadsukien();
         
+//        this.add(new functionIcon("icons8_add_new_64px.png", " SỰ KIỆN 1", root));
+
     }
 
     /**
@@ -34,7 +45,7 @@ public class QLsukien extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        btntaosk = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -42,9 +53,9 @@ public class QLsukien extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1110, 640));
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 3, 5));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 204));
-        jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        btntaosk.setBackground(new java.awt.Color(0, 102, 204));
+        btntaosk.setPreferredSize(new java.awt.Dimension(200, 100));
+        btntaosk.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_add_new_50px.png"))); // NOI18N
@@ -53,25 +64,37 @@ public class QLsukien extends javax.swing.JPanel {
                 jLabel1MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        btntaosk.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("TẠO SỰ KIỆN");
-        jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_END);
+        btntaosk.add(jLabel2, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanel1);
+        add(btntaosk);
     }// </editor-fold>//GEN-END:initComponents
+public void addSukien(String  tensk  , MainF pa,SuKien ev) {
+        this.add(new functionIcon(tensk, pa,ev));
+        this.validate();
+    }
 
+    void loadsukien() {
+        this.removeAll();
+        this.add(btntaosk);
+        lsk= DAOSK.selectall();
+        lsk.forEach(sk -> {
+            addSukien(sk.getTenSK(), ro, sk);
+        });
+    }
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       new Taosukien().setVisible(true);
+        new Taosukien(ro, this).setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btntaosk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,10 @@
  */
 package com.pro1e.UI;
 
+import com.pro1e.DAO.NhanvienDAO;
+import com.pro1e.utils.auth;
 import com.pro1e.utils.magbox;
+import duan1.model.NhanVien;
 import java.awt.Color;
 
 import javax.swing.JOptionPane;
@@ -16,12 +19,14 @@ import javax.swing.JOptionPane;
  */
 public class LoginForm extends javax.swing.JFrame {
 
+    NhanvienDAO nvDAO = new NhanvienDAO();
+
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
         initComponents();
-        
+
     }
 
     /**
@@ -45,7 +50,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btndangnhap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -153,10 +158,15 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 204));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("ĐĂNG NHẬP");
+        btndangnhap.setBackground(new java.awt.Color(0, 102, 204));
+        btndangnhap.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btndangnhap.setForeground(new java.awt.Color(255, 255, 255));
+        btndangnhap.setText("ĐĂNG NHẬP");
+        btndangnhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndangnhapActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -168,7 +178,7 @@ public class LoginForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btndangnhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +218,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(btndangnhap, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -229,7 +239,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void txtPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusGained
         txtPass.setText("");
-       txtPass.setForeground(Color.black);
+        txtPass.setForeground(Color.black);
     }//GEN-LAST:event_txtPassFocusGained
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -242,9 +252,41 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         if (magbox.confirm(this, "thoát chương trình")) {
-            System.exit(0);            
+            System.exit(0);
         }
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void btndangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndangnhapActionPerformed
+        login();
+    }//GEN-LAST:event_btndangnhapActionPerformed
+    void login() {
+        if (checkEmty()) {
+            String user = txtUser.getText();
+            String passString = new String(txtPass.getPassword());
+            /////////get nhân viên
+            NhanVien nv = nvDAO.selectByeDT(user);
+          //  System.out.println(nv.toString());
+            /////////////////
+            if (nv == null) {
+                magbox.mgbox(this, "Tài khoản không tồn tại");
+            } else if (!nv.getMatKhau().equals(passString)) {
+                magbox.mgbox(this, "mật khẩu không chính xác");
+            } else {
+                auth.curentNVien = nv;
+                this.dispose();
+                new MainF().setVisible(true);
+            }
+
+        }
+    }
+
+    boolean checkEmty() {
+        if (txtUser.getText().equals("") || txtPass.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -283,7 +325,7 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btndangnhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,5 +339,5 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
-   
+
 }
