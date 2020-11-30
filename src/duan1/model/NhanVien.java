@@ -118,9 +118,14 @@ public class NhanVien {
         this.idphong = idphong;
     }
 
+   
+    public String toString1() {
+        return "NhanVien{" + "matKhau=" + matKhau + ", tenNV=" + tenNV + ", Hinh=" + Hinh + ", idBan=" + idBan + ", Email=" + Email + ", sdt=" + sdt + ", cmnd=" + cmnd + ", quyen=" + quyen + ", manv=" + manv + ", idphong=" + idphong + '}';
+    }
+
     @Override
     public String toString() {
-        return "NhanVien{" + "matKhau=" + matKhau + ", tenNV=" + tenNV + ", Hinh=" + Hinh + ", idBan=" + idBan + ", Email=" + Email + ", sdt=" + sdt + ", cmnd=" + cmnd + ", quyen=" + quyen + ", manv=" + manv + ", idphong=" + idphong + '}';
+        return  idBan+" - "+tenNV ;
     }
 
     

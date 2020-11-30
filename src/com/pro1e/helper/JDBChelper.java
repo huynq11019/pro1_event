@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class JDBChelper {
 //    tạo kết nối
 
-    static String sql = "jdbc:sqlserver://localhost:1433;database=PRO1_E1";
+    static String sql = "jdbc:sqlserver://localhost:1433;database=PRO1_E2";
     static String user = "sa";
     static String pass = "123123";
     static String dri = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -114,7 +114,7 @@ public class JDBChelper {
 
     }
 
-    public static void main(String[] args) {
-        JDBChelper.cnn();
-    }
+//    public static void main(String[] args) {
+//        JDBChelper.cnn();
+//    }
 }

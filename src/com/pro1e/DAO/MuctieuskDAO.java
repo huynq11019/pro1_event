@@ -23,7 +23,7 @@ public class MuctieuskDAO implements DAOhelper<MucTieuSK, Integer> {
 //    private final String select_byid = "";
 
     private final String insert_sql = "insert into MUCTIEUSK(IDSK,MUCTIEU,TRANGTHAI) values (?,?,?)";
-    private final String update_sql = "update MUCTIEUSK set IDSK,MUCTIEU,TRANGTHAI where IDMT = ?";
+    private final String update_sql = "update MUCTIEUSK set IDSK=?,MUCTIEU=?,TRANGTHAI=? where IDMT = ?";
     private final String delete_sql = "delete from MUCTIEUSK where IDMT = ?";
     private final String select_all = "select * from MUCTIEUSK";
     private final String select_byid = "select * from MUCTIEUSK where IDMT=?";
@@ -47,7 +47,11 @@ public class MuctieuskDAO implements DAOhelper<MucTieuSK, Integer> {
     public List<MucTieuSK> selectall() {
       return selectbySQL(select_all);
     }
-
+    public List<MucTieuSK> selectMuctieuBysk(Integer idsk){
+        String sql = "select * from MUCTIEUSK where IDSK = ?";
+       return  selectbySQL(sql, idsk);
+       
+    }
     @Override
     public MucTieuSK selectbyID(Integer id) {
        return selectbySQL(select_byid, id).get(0);
@@ -72,6 +76,11 @@ public class MuctieuskDAO implements DAOhelper<MucTieuSK, Integer> {
             throw new RuntimeException();
                     
         }
+    }
+
+    @Override
+    public List<MucTieuSK> selectbysomething(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

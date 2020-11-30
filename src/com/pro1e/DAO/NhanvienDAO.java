@@ -18,29 +18,32 @@ import java.sql.SQLException;
  */
 public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
 
-    private final String insert_sql = "INSERT INTO NHANVIEN VALUES(?,?,?,?,?,?,?,?)";
-    private final String update_sql = "UPDATE NHANVIEN SET TENNV=?, IDBAN=?, EMAIL=?,SDT=? ,CMT=? ,  MATKHAU=?, HINH=?,QUYEN=? WHERE IDNV=?";
+    private final String insert_sql = "INSERT INTO NHANVIEN VALUES(?,?,?,?,?,?,?,?,?)";
+    private final String update_sql = "UPDATE NHANVIEN SET TENNV=?, IDBAN=?, IDPHONG= ?, EMAIL=?,SDT=? ,CMT=? ,  MATKHAU=?, HINH=?,QUYEN=? WHERE IDNV=?";
     private final String delete_sql ="delete from NHANVIEN where IDNV =?";
     private final String select_all = "select * from NHANVIEN";
     private final String select_byid = "select * from NHANVIEN where IDNV =?";
 
     @Override
     public int insert(NhanVien e) {
-        return JDBChelper.update(insert_sql, e.getTenNV(), e.getIdBan(),
+        return JDBChelper.update(insert_sql, e.getTenNV(), e.getIdBan(),e.getIdphong(),
                  e.getEmail(), e.getSdt(), e.getCmnd(), e.getMatKhau(), e.getHinh(), e.getQuyen());
 
     }
 
     @Override
     public int update(NhanVien e) {
-        return JDBChelper.update(update_sql, e.getTenNV(), e.getIdBan(), e.getEmail(), e.getSdt(), e.getCmnd(), e.getMatKhau(), e.getHinh(), e.getManv());
+        return JDBChelper.update(update_sql, e.getTenNV(), e.getIdBan(),e.getIdphong(), e.getEmail(), e.getSdt(), e.getCmnd(), e.getMatKhau(), e.getHinh(), e.getQuyen(), e.getManv());
     }
 
     @Override
     public int delete(Integer id) {
      return JDBChelper.update(delete_sql, id);
     }
-
+    public List<NhanVien> timKiemNV (String key){
+        String sql = "select * from NHANVIEN where TENNV like N'%"+key+"%' or IDBAN = ?";
+        return selectbySQL(sql,key);
+    }
     @Override
     public List<NhanVien> selectall() {
         return selectbySQL(select_all);
@@ -49,7 +52,14 @@ public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
     @Override
     public NhanVien selectbyID(Integer id) {
         List<NhanVien> nv = selectbySQL(select_byid, id);
+          if (nv.isEmpty()) {// kiểm tra có dữ liệu không
+            return null;
+        }
         return nv.get(0);
+    }
+    public List<NhanVien> selectByBan(String ban){
+        String sql = "select * from NHANVIEN where iDBAN =?";
+          return selectbySQL(sql,ban);
     }
     public NhanVien selectByeDT(String email){
       String sqla = "select * from NHANVIEN where  SDT like ? or  EMAIL like ?";
@@ -79,6 +89,7 @@ public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
                nv.setMatKhau(rs.getString("MATKHAU"));
                nv.setHinh(rs.getString("HINH"));
                nv.setQuyen(rs.getInt("QUYEN"));
+               nv.setIdphong(rs.getInt("IDPHONG"));
                lsv.add(nv);
             }
             rs.getStatement().getConnection().close();
@@ -86,6 +97,11 @@ public class NhanvienDAO implements DAOhelper<NhanVien, Integer> {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public List<NhanVien> selectbysomething(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

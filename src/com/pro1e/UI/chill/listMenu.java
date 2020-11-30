@@ -18,8 +18,10 @@ public class listMenu extends javax.swing.JPanel {
     /**
      * Creates new form listMenu
      */
-    public listMenu() {
+    MainF pa ;
+    public listMenu(MainF pa) {
         initComponents();
+        this.pa = pa;
     }
 
     /**
@@ -189,7 +191,7 @@ public class listMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel8MouseExited
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       new MainF();
+        pa.openForm(new HomeMenu(pa));
     }//GEN-LAST:event_jLabel1MouseClicked
 
 

@@ -5,17 +5,12 @@
  */
 package com.pro1e.UI;
 
-<<<<<<< Updated upstream
-import com.pro1e.helper.FunctionHelper;
-import duan1.model.MucTieuSK;
-=======
 import com.pro1e.DAO.SukienDAO;
 import com.pro1e.helper.FunctionHelper;
 import com.pro1e.utils.Xdate;
 import com.pro1e.utils.magbox;
 import duan1.model.MucTieuSK;
 import duan1.model.SuKien;
->>>>>>> Stashed changes
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
@@ -28,35 +23,26 @@ import javax.swing.table.DefaultTableModel;
  * @param taosukien jdilog tạo mới các sự kiện
  *
  */
-public class Taosukien extends javax.swing.JDialog {
+public class TAosukien extends javax.swing.JDialog {
 
     /**
      * Creates new form Taosukien
      */
     List<MucTieuSK> listmuctieu = new ArrayList<>();
     DefaultTableModel model;
-<<<<<<< Updated upstream
-
-    public Taosukien() {
-=======
     final String panter = "yyyy-MM-dd";
     SukienDAO DAOsk = new SukienDAO();
     MucTieuSK DAOmt = new MucTieuSK();
     int idSuKien = -1;
-    QLsukien pa;
+    QLsukienPN pa;
     MainF main;
 
-    public Taosukien(MainF root, QLsukien listSK) {
->>>>>>> Stashed changes
+    public TAosukien(MainF root, QLsukienPN listSK) {
 
         initComponents();
         this.pa = listSK;
         this.setLocationRelativeTo(null);
-<<<<<<< Updated upstream
-        FunctionHelper.setColumnWidths(tbmuctieu, 100, 400);
-=======
         // FunctionHelper.setColumnWidths(tbmuctieu, 100, 400);
->>>>>>> Stashed changes
 
     }
 
@@ -118,83 +104,24 @@ public class Taosukien extends javax.swing.JDialog {
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel2.setBackground(new java.awt.Color(0, 102, 204));
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("TÊN SỰ KIỆN");
 
         txttenSk.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("MÔ TẢ SỰ KIỆN");
 
         txtMota.setColumns(20);
         txtMota.setRows(5);
         jScrollPane3.setViewportView(txtMota);
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ngày bắt đầu: ");
 
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Ngày kết thúc:");
 
-<<<<<<< Updated upstream
-        pnmuctieu1.setBackground(new java.awt.Color(255, 255, 255));
-        pnmuctieu1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        txtmtieu.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtmtieu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tạo mục tiêu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
-        txtmtieu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtmtieuKeyPressed(evt);
-            }
-        });
-
-        tbmuctieu.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "TRẠNG THÁI", "DANH SÁCH MỤC TIÊU'"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tbmuctieu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbmuctieuKeyPressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbmuctieu);
-        if (tbmuctieu.getColumnModel().getColumnCount() > 0) {
-            tbmuctieu.getColumnModel().getColumn(0).setResizable(false);
-        }
-
-        btntaomt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btntaomt.setText("OK");
-        btntaomt.addActionListener(new java.awt.event.ActionListener() {
-=======
         btntaosk.setText("Tạo ");
         btntaosk.addActionListener(new java.awt.event.ActionListener() {
->>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btntaoskActionPerformed(evt);
             }
@@ -210,31 +137,6 @@ public class Taosukien extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< Updated upstream
-                            .addComponent(pnmuctieu1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel8))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jDateChooser3, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                            .addComponent(jDateChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(0, 246, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtten1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6))
-                        .addGap(71, 71, 71))))
-=======
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
@@ -249,7 +151,6 @@ public class Taosukien extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane3))
                 .addContainerGap(21, Short.MAX_VALUE))
->>>>>>> Stashed changes
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,61 +192,29 @@ public class Taosukien extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< Updated upstream
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.out.println("chào các bạn");
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void btntaomtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntaomtActionPerformed
-        getmuctieuSK();
-
-    }//GEN-LAST:event_btntaomtActionPerformed
-
-    private void txtmtieuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmtieuKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            getmuctieuSK();
-        }
-    }//GEN-LAST:event_txtmtieuKeyPressed
-
-    private void tbmuctieuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbmuctieuKeyPressed
-     // xóa mục tiêu
-    }//GEN-LAST:event_tbmuctieuKeyPressed
-    void getmuctieuSK() {
-        String mTieu = txtmtieu.getText();
-
-        MucTieuSK muctieu = new MucTieuSK();
-        muctieu.setMucTieu(mTieu);
-        muctieu.setTrangThai(false);
-        listmuctieu.add(muctieu);
-        loadMuctieu();
-//pnmuctieu.add(new JCheckBox(mTieu, false));
-//pnmuctieu.validate();
-    }
-
-    void loadMuctieu() {
-        model = (DefaultTableModel) tbmuctieu.getModel();
-        model.setRowCount(0);
-        for (MucTieuSK mt : listmuctieu) {
-            model.addRow(new Object[]{
-                mt.isTrangThai(), mt.getMucTieu()
-            }
-            );
-        }
-    }
-
-=======
     private void btntaoskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntaoskActionPerformed
 //        System.out.println(getSukien().toString());
-        int c = DAOsk.insert(getSukien());
-        if (c > 0) {
-            magbox.mgbox(this, "đã tạo sự kiện" + c);
+        if (checkForm()) {
+            int c = DAOsk.insert(getSukien());
+            if (c > 0) {
+//                magbox.mgbox(this, "đã tạo sự kiện" + c);
 //             pa.addSukien("icons8_heart_outline_100px.png", getSukien().getTenSK(), main, new QLnhiemvu());
-            pa.loadsukien();
-            this.dispose();
-        } else {
-            magbox.mgbox(this, "lỗi tạo" + c);
+                pa.loadsukien();
+                this.dispose();
+            } else {
+                magbox.mgbox(this, "lỗi tạo" + c);
+            }
+        }else{
+            magbox.mgbox(this, "yêu cầu nhập đủ thông tin");
         }
     }//GEN-LAST:event_btntaoskActionPerformed
+    boolean checkForm() {
+        if (txttenSk.getText().equals("") || dateStart.getDate() == null || datedone.getDate() == null) {
+            return false;
+        }
+        return true;
+    }
+
     SuKien getSukien() {
         SuKien sk = new SuKien();
         sk.setTenSK(txttenSk.getText());
@@ -380,7 +249,6 @@ public class Taosukien extends javax.swing.JDialog {
 //        }
 //        
 //    }
->>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */
@@ -424,16 +292,9 @@ public class Taosukien extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< Updated upstream
-    private javax.swing.JButton btntaomt;
-    private javax.swing.JButton jButton3;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
-=======
     private javax.swing.JButton btntaosk;
     private com.toedter.calendar.JDateChooser dateStart;
     private com.toedter.calendar.JDateChooser datedone;
->>>>>>> Stashed changes
     private com.toedter.calendar.JDayChooser jDayChooser1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -441,24 +302,12 @@ public class Taosukien extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-<<<<<<< Updated upstream
-    private javax.swing.JScrollPane jScrollPane1;
-=======
->>>>>>> Stashed changes
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-<<<<<<< Updated upstream
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JPanel pnmuctieu1;
-    private javax.swing.JTable tbmuctieu;
-    private javax.swing.JTextField txtmtieu;
-    private javax.swing.JTextField txtten1;
-=======
     private javax.swing.JTextArea txtMota;
     private javax.swing.JTextField txttenSk;
->>>>>>> Stashed changes
     // End of variables declaration//GEN-END:variables
 }

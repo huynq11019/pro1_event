@@ -91,4 +91,9 @@ public class SukienDAO implements DAOhelper<SuKien, Integer> {
         }
     }
 
+    @Override
+    public List<SuKien> selectbysomething(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

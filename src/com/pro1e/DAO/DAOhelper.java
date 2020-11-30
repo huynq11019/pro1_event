@@ -23,5 +23,7 @@ public interface DAOhelper<T, V> { // là type và value
 
     public T selectbyID(V id);
 
+    public List<T> selectbysomething(V id);
+
     public List<T> selectbySQL(String sql, Object... args);
 }

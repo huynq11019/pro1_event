@@ -75,6 +75,11 @@ public class GiaiDoan {
     public void setDeadLine(String DeadLine) {
         this.DeadLine = DeadLine;
     }
+
+    @Override
+    public String toString() {
+        return "GiaiDoan{" + "idGiaiDoan=" + idGiaiDoan + ", idSK=" + idSK + ", tenGD=" + tenGD + ", mota=" + mota + ", ngayBD=" + ngayBD + ", DeadLine=" + DeadLine + '}';
+    }
     
    
     

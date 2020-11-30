@@ -64,6 +64,11 @@ public class HauCan {
         this.dienThoai = dienThoai;
     }
 
+    @Override
+    public String toString() {
+        return "HauCan{" + "IDHauCan=" + IDHauCan + ", TenBP=" + TenBP + ", TenNguoiLH=" + TenNguoiLH + ", email=" + email + ", dienThoai=" + dienThoai + '}';
+    }
+
    
     
 }

@@ -7,6 +7,7 @@ package com.pro1e.UI;
 
 import com.pro1e.DAO.SukienDAO;
 import com.pro1e.UI.chill.functionIcon;
+import com.pro1e.utils.auth;
 import duan1.model.SuKien;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +18,21 @@ import javax.swing.JPanel;
  *
  * @author huyNQph11019
  */
-public class QLsukien extends javax.swing.JPanel {
+public class QLsukienPN extends javax.swing.JPanel {
 
     MainF ro;
     /**
      * Creates new form QLsukien s
      */
     SukienDAO DAOSK = new SukienDAO();
-
+    TAosukien taosk ;
     List<SuKien> lsk= DAOSK.selectall();
 
-    public QLsukien(MainF root) {
+    public QLsukienPN(MainF root) {
         initComponents();
         this.ro = root;
         loadsukien();
-        
+        auth.curQLsukien = this;
 //        this.add(new functionIcon("icons8_add_new_64px.png", " SỰ KIỆN 1", root));
 
     }
@@ -88,7 +89,10 @@ public void addSukien(String  tensk  , MainF pa,SuKien ev) {
         });
     }
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        new Taosukien(ro, this).setVisible(true);
+        if (taosk== null) {
+          taosk =    new TAosukien(ro, this);
+          taosk.setVisible(true);
+        }
     }//GEN-LAST:event_jLabel1MouseClicked
 
 

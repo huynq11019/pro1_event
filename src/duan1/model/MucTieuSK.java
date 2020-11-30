@@ -16,8 +16,10 @@ public class MucTieuSK {
 
     @Override
     public String toString() {
-        return this.mucTieu;
+        return "MucTieuSK{" + "idMucTieu=" + idMucTieu + ", idSK=" + idSK + ", mucTieu=" + mucTieu + ", TrangThai=" + TrangThai + '}';
     }
+
+  
 
     public int getIdMucTieu() {
         return idMucTieu;

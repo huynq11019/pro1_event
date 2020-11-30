@@ -103,6 +103,11 @@ public class NhiemVu {
     public void setTGHT(String TGHT) {
         this.TGHT = TGHT;
     }
+
+    @Override
+    public String toString() {
+        return "NhiemVu{" + "iDNVu=" + iDNVu + ", idGiaiDoan=" + idGiaiDoan + ", tenNVu=" + tenNVu + ", moTa=" + moTa + ", fileIn=" + fileIn + ", trangThai=" + trangThai + ", ngatBD=" + ngatBD + ", DeaLine=" + DeaLine + ", TGHT=" + TGHT + '}';
+    }
     
     
   

@@ -5,6 +5,7 @@
  */
 package com.pro1e.UI;
 
+import com.pro1e.DAO.GiaidoanDAO;
 import com.pro1e.helper.FunctionHelper;
 import duan1.model.MucTieuSK;
 import java.awt.event.KeyEvent;
@@ -14,33 +15,49 @@ import com.pro1e.DAO.SukienDAO;
 import com.pro1e.helper.JDBChelper;
 import com.pro1e.utils.Xdate;
 import com.pro1e.utils.auth;
+import com.pro1e.utils.magbox;
+import duan1.model.GiaiDoan;
 import duan1.model.SuKien;
+import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author huyNQph11019
  */
-public class QLnhiemvu extends javax.swing.JPanel {
-
+public class QLnhiemvuPN extends javax.swing.JPanel {
+    
     DefaultTableModel model;
     MuctieuskDAO mtDAO = new MuctieuskDAO();
     SukienDAO skDAO = new SukienDAO();
+    GiaidoanDAO gdDAO = new GiaidoanDAO();
     List<MucTieuSK> listMT;
+    
+    List<GiaiDoan> lsGD;
     SuKien ev; // sự kiện hiện tại
+    TAOgiaodan taoGD;
 
     /**
      * Creates new form QLnhiemvu
      */
-    public QLnhiemvu() { // tham số truyển vào là 1 sự kiện
+    public QLnhiemvuPN() { // tham số truyển vào là 1 sự kiện
         initComponents();
         innitSUkien(auth.curSUKIEN);
-        
         System.out.println(auth.curSUKIEN);
         FunctionHelper.setColumnWidths(tbmcutieu, 100, 190);
         model = (DefaultTableModel) tbmcutieu.getModel();
-        listMT = mtDAO.selectall();
+//        listMT = mtDAO.selectMuctieuBysk(auth.curSUKIEN.getIDSK());
+        lsGD = gdDAO.selectbysomething(auth.curSUKIEN.getIDSK());
         loadMt();
+        loadGD();
+        auth.curqlnhiemvu = this;
+//        for (GiaiDoan gd : lsGD) {
+//            System.out.println(gd.toString());
+//        }
+        
+            btnxoa.setVisible(lsGD.isEmpty());
+        
     }
 
     /**
@@ -54,7 +71,7 @@ public class QLnhiemvu extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnxoa = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lbtensk = new javax.swing.JLabel();
@@ -69,6 +86,8 @@ public class QLnhiemvu extends javax.swing.JPanel {
         txtmcutieu = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbmcutieu = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        pnmain = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1110, 640));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -77,13 +96,18 @@ public class QLnhiemvu extends javax.swing.JPanel {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_add_new_50px_1.png"))); // NOI18N
         jButton1.setText("Tạo giai đoạn");
-
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("XÓA SỰ KIỆN");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnxoa.setBackground(new java.awt.Color(255, 0, 0));
+        btnxoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnxoa.setText("XÓA SỰ KIỆN");
+        btnxoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxoaActionPerformed(evt);
             }
         });
 
@@ -94,14 +118,14 @@ public class QLnhiemvu extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1)
                 .addGap(38, 38, 38)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(514, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -150,7 +174,7 @@ public class QLnhiemvu extends javax.swing.JPanel {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(datebd, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(datekt, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 16, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -209,12 +233,20 @@ public class QLnhiemvu extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbmcutieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbmcutieuMouseClicked(evt);
+            }
+        });
+        tbmcutieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbmcutieuKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbmcutieu);
         if (tbmcutieu.getColumnModel().getColumnCount() > 0) {
             tbmcutieu.getColumnModel().getColumn(0).setResizable(false);
-            tbmcutieu.getColumnModel().getColumn(0).setHeaderValue("TRẠNG THÁI");
             tbmcutieu.getColumnModel().getColumn(1).setResizable(false);
-            tbmcutieu.getColumnModel().getColumn(1).setHeaderValue("MUC TIEU");
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -223,10 +255,10 @@ public class QLnhiemvu extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                    .addComponent(txtmcutieu))
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtmcutieu, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,8 +272,10 @@ public class QLnhiemvu extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,6 +286,13 @@ public class QLnhiemvu extends javax.swing.JPanel {
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 0, 310, 640));
+
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        pnmain.setPreferredSize(new java.awt.Dimension(800, 600));
+        jScrollPane3.setViewportView(pnmain);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 810, 600));
     }// </editor-fold>//GEN-END:initComponents
 void innitSUkien(SuKien OBJsukien) {
         lbtensk.setText(OBJsukien.getTenSK());
@@ -262,20 +303,56 @@ void innitSUkien(SuKien OBJsukien) {
     private void txtmcutieuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmcutieuKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (mtDAO.insert(getMT()) > 0) {
-                model.addRow(new Object[]{
-                    getMT().isTrangThai(), getMT().getMucTieu()
-                });
+                loadMt();
+                txtmcutieu.setText("");
             }
-
+            
         }
     }//GEN-LAST:event_txtmcutieuKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-    void xoaSk(){
-        skDAO.delete(WIDTH);
+    private void btnxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaActionPerformed
+        xoaSk();
+        auth.curmain.openSUKIEN();
+    }//GEN-LAST:event_btnxoaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        taoGD = new TAOgiaodan(this);
+        taoGD.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbmcutieuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbmcutieuKeyPressed
+        // xóa mục tiêu sự kiện
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            int index = tbmcutieu.getSelectedRow();
+            System.out.println("index =" + index + listMT.get(index).toString());
+            if (mtDAO.delete(listMT.get(index).getIdMucTieu()) > 0) {
+                loadMt();
+            } else {
+                magbox.mgbox(this, "không thể xóa");
+            }
+        }
+    }//GEN-LAST:event_tbmcutieuKeyPressed
+
+    private void tbmcutieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbmcutieuMouseClicked
+        int index = tbmcutieu.rowAtPoint(evt.getPoint());
+//        System.out.println(tbmcutieu.getValueAt(index, 0));
+        MucTieuSK mt = listMT.get(index);
+        mt.setTrangThai((boolean) tbmcutieu.getValueAt(index, 0));
+        if (mtDAO.update(mt)>0) {
+            System.out.println("oko kkok ok k ok ok k ");
+        }else{
+            magbox.mgbox(this, "lỗi check box");
+        }
+    }//GEN-LAST:event_tbmcutieuMouseClicked
+    void xoaSk() {
+        if (skDAO.delete(auth.curSUKIEN.getIDSK()) > 0) {
+            magbox.mgbox(this, "đã xóa sự kiện");
+            auth.curQLsukien.loadsukien();
+        } else {
+            magbox.mgbox(this, "không xóa được");
+        }
     }
+    
     MucTieuSK getMT() {
         if (!txtmcutieu.getText().equals("")) {
             MucTieuSK mt = new MucTieuSK();
@@ -287,22 +364,43 @@ void innitSUkien(SuKien OBJsukien) {
             return null;
         }
     }
-
+    
+    void setPackmain(int h) {
+        pnmain.setPreferredSize(new Dimension(800, h));
+    }
+    
+    void loadGD() {
+        int Tongkichthuoc = 0;
+        lsGD = gdDAO.selectbysomething(auth.curSUKIEN.getIDSK());
+//pnmain.setPreferredSize(new Dimension(800 , 1200));
+        pnmain.removeAll();
+        for (GiaiDoan giaiDoan : lsGD) {
+            System.out.println("load giai đoạn" + giaiDoan.toString());
+            pnmain.add(new Pngiaidoan(giaiDoan));
+            pnmain.validate();
+            Tongkichthuoc += Pngiaidoan.heightpn;
+            System.err.println(Tongkichthuoc);
+        }
+//       System.out.println(Pngiaidoan.heightpn);
+        setPackmain(Tongkichthuoc + 110); // pack 
+    }
+    
     void loadMt() {
+        listMT = mtDAO.selectMuctieuBysk(auth.curSUKIEN.getIDSK());
         model.setRowCount(0);
         listMT.forEach(mt -> {
             model.addRow(new Object[]{
-                mt.isTrangThai(), mt.getIdMucTieu()
+                mt.isTrangThai(), mt.getMucTieu()
             });
         });
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnxoa;
     private com.toedter.calendar.JDateChooser datebd;
     private com.toedter.calendar.JDateChooser datekt;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -312,7 +410,9 @@ void innitSUkien(SuKien OBJsukien) {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbtensk;
+    private javax.swing.JPanel pnmain;
     private javax.swing.JTable tbmcutieu;
     private javax.swing.JTextField txtmcutieu;
     private javax.swing.JTextArea txtmota;

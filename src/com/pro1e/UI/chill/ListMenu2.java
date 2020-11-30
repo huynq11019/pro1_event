@@ -33,19 +33,19 @@ public class ListMenu2 extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel11 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -55,6 +55,28 @@ public class ListMenu2 extends javax.swing.JPanel {
         setForeground(new java.awt.Color(8, 3, 12));
         setPreferredSize(new java.awt.Dimension(187, 600));
         setLayout(new java.awt.GridLayout(10, 0));
+
+        jPanel6.setBackground(new java.awt.Color(8, 3, 12));
+        jPanel6.setPreferredSize(new java.awt.Dimension(187, 50));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_home_24px.png"))); // NOI18N
+        jPanel6.add(jLabel10, java.awt.BorderLayout.LINE_START);
+
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel6.add(jSeparator1, java.awt.BorderLayout.PAGE_START);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("TRANG CHỦ");
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+        jPanel6.add(jLabel11, java.awt.BorderLayout.CENTER);
+
+        add(jPanel6);
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(187, 50));
@@ -67,9 +89,6 @@ public class ListMenu2 extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText(" SỰ KIỆN");
         jPanel1.add(jLabel2, java.awt.BorderLayout.CENTER);
-
-        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jSeparator1, java.awt.BorderLayout.PAGE_START);
 
         add(jPanel1);
 
@@ -100,29 +119,11 @@ public class ListMenu2 extends javax.swing.JPanel {
         jPanel5.add(jLabel9, java.awt.BorderLayout.CENTER);
 
         add(jPanel5);
-
-        jPanel6.setBackground(new java.awt.Color(8, 3, 12));
-        jPanel6.setPreferredSize(new java.awt.Dimension(187, 50));
-        jPanel6.setLayout(new java.awt.BorderLayout());
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_home_24px.png"))); // NOI18N
-        jPanel6.add(jLabel10, java.awt.BorderLayout.LINE_START);
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("TRANG CHỦ");
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-        });
-        jPanel6.add(jLabel11, java.awt.BorderLayout.CENTER);
-
-        add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         m.openNol();
+        m.curChucnang("Phần mềm quản lý sự kiện");
     }//GEN-LAST:event_jLabel11MouseClicked
 
 

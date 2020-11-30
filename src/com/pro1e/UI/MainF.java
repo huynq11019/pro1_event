@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Timer;
 import com.pro1e.UI.chill.listMenu;
+import com.pro1e.utils.auth;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,14 +33,17 @@ public class MainF extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         openNol();
+        auth.curmain = this;
     }
 
     public void openNol() {
-        openMenu(new listMenu());
+        openMenu(new listMenu(this));
         pnMEONU.setBackground(new Color(0, 102, 204));
         pnthongtin.setBackground(new Color(0, 102, 204));
         pnauth.setBackground(new Color(0, 102, 204));
         openForm(new HomeMenu(this));
+        lbtenv.setText(auth.curentNVien.getTenNV());
+        lbquyen.setText(auth.curentNVien.getQuyen()==0?"quản lý":"nhân viên");
     }
 
     public void openSUKIEN() {
@@ -49,8 +53,12 @@ public class MainF extends javax.swing.JFrame {
         pnthongtin.setBackground(new Color(8, 3, 12));
         pnauth.setBackground(new Color(8, 3, 12));
         pnbackground.removeAll();
-        openForm(new QLsukien(this));
+        openForm(new QLsukienPN(this));
 
+    }
+
+  public  void curChucnang(String curCN) {
+        lbchucnang.setText(curCN);
     }
 
     public void openForm(JPanel chill) {
@@ -86,10 +94,9 @@ public class MainF extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         pnNAV = new javax.swing.JPanel();
         pnauth = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         pnthongtin = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbtenv = new javax.swing.JLabel();
+        lbquyen = new javax.swing.JLabel();
         pnMEONU = new javax.swing.JPanel();
         title = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -121,21 +128,17 @@ public class MainF extends javax.swing.JFrame {
         pnauth.setBackground(new java.awt.Color(0, 102, 204));
         pnauth.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_user_24px.png"))); // NOI18N
-        pnauth.add(jLabel2);
-
         pnthongtin.setBackground(new java.awt.Color(0, 102, 204));
         pnthongtin.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("mã nhân viên + mã phòng ban");
-        pnthongtin.add(jLabel1);
+        lbtenv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbtenv.setForeground(new java.awt.Color(255, 255, 255));
+        lbtenv.setText("mã nhân viên + mã phòng ban");
+        pnthongtin.add(lbtenv);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 51));
-        jLabel3.setText("Quyền");
-        pnthongtin.add(jLabel3);
+        lbquyen.setForeground(new java.awt.Color(255, 255, 51));
+        lbquyen.setText("Quyền");
+        pnthongtin.add(lbquyen);
 
         pnauth.add(pnthongtin);
 
@@ -199,7 +202,7 @@ public class MainF extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("back");
+        jButton2.setText("sk");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -215,12 +218,12 @@ public class MainF extends javax.swing.JFrame {
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleLayout.createSequentialGroup()
                 .addGap(182, 182, 182)
-                .addComponent(lbchucnang, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(lbchucnang, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(268, 268, 268)
                 .addComponent(jButton1)
-                .addGap(49, 49, 49)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 692, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         titleLayout.setVerticalGroup(
@@ -319,13 +322,12 @@ public class MainF extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbchucnang;
+    private javax.swing.JLabel lbquyen;
+    private javax.swing.JLabel lbtenv;
     private javax.swing.JPanel pnMEONU;
     private javax.swing.JPanel pnNAV;
     private javax.swing.JPanel pnauth;

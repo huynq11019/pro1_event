@@ -6,7 +6,7 @@
 package com.pro1e.UI.chill;
 
 import com.pro1e.UI.MainF;
-import com.pro1e.UI.QLnhiemvu;
+import com.pro1e.UI.QLnhiemvuPN;
 import com.pro1e.UI.chill.*;
 import com.pro1e.utils.Xfile;
 import com.pro1e.utils.auth;
@@ -82,7 +82,7 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
     
     public void showcn(java.awt.event.MouseEvent evt) {
         auth.curSUKIEN = ev;
-        root.openForm(new QLnhiemvu());
+        root.openForm(new QLnhiemvuPN());
     }
 //    ImageIcon iconF (String path){
 //        try {
