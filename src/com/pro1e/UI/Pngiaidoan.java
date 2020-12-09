@@ -13,7 +13,10 @@ import java.awt.Dimension;
 import java.util.List;
 import AppPackage.AnimationClass;
 import com.pro1e.DAO.GiaidoanDAO;
+import com.pro1e.helper.DATEhelper;
+import com.pro1e.utils.Xdate;
 import com.pro1e.utils.magbox;
+import java.awt.Color;
 
 /**
  *
@@ -26,11 +29,14 @@ public class Pngiaidoan extends javax.swing.JPanel {
     GiaiDoan gds;
     nhiemvuDAO nvdao = new nhiemvuDAO();
     GiaidoanDAO gdDAO = new GiaidoanDAO();
+
     public Pngiaidoan(GiaiDoan gd) {
         initComponents();
         this.gds = gd;
         innit(gd);
-        loadNVu();
+        if (gd.getLockAT() == null) {
+            loadNVu();
+        }
 
 //        for (int i = 0; i < 10; i++) {
 //            this.addNV();
@@ -43,22 +49,43 @@ public class Pngiaidoan extends javax.swing.JPanel {
         lbtengd.setText(gd.getTenGD());
         lbbatdau.setText(gd.getNgayBD());
         lbketthuc.setText(gd.getDeadLine());
+        if (gd.getLockAT() != null) {
+            this.setBackground(new Color(0, 102, 204));
+        }
     }
     int curheight = 0;
     public static int heightpn = 0; //kích thước pannel giai đoạn
+    int valuesPRS = 0;
+    int nvHT = 0;
+
+    public void loadTiendo() {
+        int tongnv = lsnv.size();
+        if (tongnv > 0) {
+            int tienDo = (nvHT * 100) / tongnv;
+            System.out.println(tongnv + "tổng và nvht " + nvHT + "tiến độ: " + tienDo);
+            tienDobar.setValue(tienDo);
+        }
+    }
 
     void loadNVu() {
+        heightpn = this.getPreferredSize().height; // kích thước của 1 pannel giai đoạn
         lsnv = nvdao.selectbysomething(gds.getIdGiaiDoan());
+        nvHT = 0;
         for (NhiemVu nhiemVu : lsnv) {
             addNV(nhiemVu);
+            if (nhiemVu.isTrangThai()) {
+                nvHT++;
+            }
         }
+        System.out.println("kích thước list " + lsnv.size());
+
+        loadTiendo();
 
     }
 
     void addNV(NhiemVu nv) {
-        pnlisstNV.add(new Pnnhiemvu(this,nv)); //nhiệm vụ được truyền vào theo list
 
-        heightpn = this.getPreferredSize().height; // kích thước của 1 pannel giai đoạn
+        pnlisstNV.add(new Pnnhiemvu(this, nv)); //nhiệm vụ được truyền vào theo list
         //   pnlisstNV.setSize(800, 150);
         // int h2 = pnlisstNV.getHeight();
         pnlisstNV.setPreferredSize(new Dimension(800, curheight += 110)); // kích thước hiện tại của cái pn list  +110
@@ -80,9 +107,9 @@ public class Pngiaidoan extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lockgd = new javax.swing.JLabel();
         lbtengd = new javax.swing.JLabel();
-        tienDo = new javax.swing.JProgressBar();
+        tienDobar = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -115,25 +142,31 @@ public class Pngiaidoan extends javax.swing.JPanel {
         });
         jPanel1.add(jLabel3);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_delete_bin_24px.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jLabel4.setPreferredSize(new java.awt.Dimension(31, 60));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        lockgd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_lock_24px.png"))); // NOI18N
+        lockgd.setText("jLabel4");
+        lockgd.setPreferredSize(new java.awt.Dimension(31, 60));
+        lockgd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                lockgdMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel4);
+        jPanel1.add(lockgd);
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 0, 120, 60));
 
         lbtengd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbtengd.setForeground(new java.awt.Color(255, 255, 255));
         lbtengd.setText("Tên giai đoạn");
+        lbtengd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbtengdMouseClicked(evt);
+            }
+        });
         add(lbtengd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 180, 30));
 
-        tienDo.setValue(50);
-        add(tienDo, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 10, 370, -1));
+        tienDobar.setBackground(new java.awt.Color(0, 255, 51));
+        tienDobar.setForeground(new java.awt.Color(51, 255, 51));
+        add(tienDobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 10, 370, -1));
 
         jButton1.setBackground(new java.awt.Color(0, 204, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +195,7 @@ public class Pngiaidoan extends javax.swing.JPanel {
         add(lbketthuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 35, 70, -1));
 
         pnlisstNV.setBackground(new java.awt.Color(255, 255, 255));
-        pnlisstNV.setPreferredSize(new java.awt.Dimension(800, 110));
+        pnlisstNV.setPreferredSize(new java.awt.Dimension(800, 0));
         pnlisstNV.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 150, 5));
         add(pnlisstNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
@@ -183,23 +216,40 @@ public class Pngiaidoan extends javax.swing.JPanel {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         if (menuY) {
             jPanel1.setLocation(730, 0);
-            menuY =false;
+            menuY = false;
         } else {
-            menuY =true;
+            menuY = true;
             jPanel1.setLocation(780, 0);
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        if (magbox.confirm(this, "bạn có chắc chắn muốn xóa giai đoạn này")) {
-            if (gdDAO.delete(gds.getIdGiaiDoan())==0 ) {
-                magbox.mgbox(this, "không được xóa giai đoạn đang thực hiện");
-            }else{
-                this.setVisible(false);
+    private void lockgdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lockgdMouseClicked
+        if (gds.getLockAT()==null) {
+            if (magbox.confirm(this, "bạn có chắc chắn muốn CHỐT giai đoạn này")) {
+                gds.setLockAT(DATEhelper.toString(DATEhelper.nowDate(), "yyyy-MM-dd"));
+                if (gdDAO.update(gds) > 0) {
+                   auth.curqlnhiemvu.loadGD();
+                } 
+//                else {
+//                    this.setVisible(false);
+//                }
             }
-            
+        }else{
+            gds.setLockAT(null);
+              if (gdDAO.update(gds) > 0) {
+                  loadNVu();
+                    System.out.println("load giai đoạn");
+                }
         }
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_lockgdMouseClicked
+
+    private void lbtengdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbtengdMouseClicked
+        if (auth.curentNVien.getQuyen() == 0) {
+            if (evt.getClickCount() == 2) {
+                lbtengd.setText(magbox.prompt(this, "đổi tên giai đoạn"));
+            }
+        }
+    }//GEN-LAST:event_lbtengdMouseClicked
     void openNhiemvu() {
 //    System.out.println(gds.toString());
         new TAOnhiemvu(this, null, true).setVisible(true); // true == tạo , false ==  update
@@ -210,12 +260,13 @@ public class Pngiaidoan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbbatdau;
     private javax.swing.JLabel lbketthuc;
     private javax.swing.JLabel lbtengd;
+    private javax.swing.JLabel lockgd;
     private javax.swing.JPanel pnlisstNV;
-    private javax.swing.JProgressBar tienDo;
+    private javax.swing.JProgressBar tienDobar;
     // End of variables declaration//GEN-END:variables
+
 }

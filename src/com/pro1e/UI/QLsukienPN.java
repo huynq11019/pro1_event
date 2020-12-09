@@ -33,7 +33,6 @@ public class QLsukienPN extends javax.swing.JPanel {
         this.ro = root;
         loadsukien();
         auth.curQLsukien = this;
-//        this.add(new functionIcon("icons8_add_new_64px.png", " SỰ KIỆN 1", root));
 
     }
 

@@ -56,6 +56,11 @@ public class Phong {
         this.ngansach = ngansach;
     }
 
+    @Override
+    public String toString() {
+        return "Phong{" + "IDPhong=" + IDPhong + ", idTrP=" + idTrP + ", tenPhong=" + tenPhong + ", ngansach=" + ngansach + '}';
+    }
+
     
             
     

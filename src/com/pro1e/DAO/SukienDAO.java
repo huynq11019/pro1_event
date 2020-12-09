@@ -5,7 +5,9 @@
  */
 package com.pro1e.DAO;
 
+import com.pro1e.helper.DATEhelper;
 import com.pro1e.helper.JDBChelper;
+import com.pro1e.utils.Xdate;
 import duan1.model.SuKien;
 import java.util.List;
 import java.sql.ResultSet;
@@ -23,8 +25,8 @@ public class SukienDAO implements DAOhelper<SuKien, Integer> {
 
     private final String insert_sql = "insert into SUKIEN(TENSK,IDPHONG,NOIDUNG,NGAYBATDAU,NGAYKETTHUC) values(?,?,?,?,?)";
     private final String update_sql = "update SUKIEN set TENSK =? , IDPHONG=?, NOIDUNG=?, NGAYBATDAU=? ,NGAYKETTHUC=? where IDSK=?";
-    private final String delete_sql = "delete from SUKIEN where IDSK=?";
-    private final String select_all = "select * from SUKIEN order by IDSK asc";
+    private final String delete_sql = "update SUKIEN set deleAt=? where IDSK=?";
+    private final String select_all = "select * from SUKIEN where deleAt is null order by IDSK asc";
     private final String select_byid = "select * from SUKIEN where =?";
 
     @Override
@@ -53,7 +55,7 @@ public class SukienDAO implements DAOhelper<SuKien, Integer> {
 
     @Override
     public int delete(Integer id) {
-        return JDBChelper.update(delete_sql, id);
+        return JDBChelper.update( delete_sql, Xdate.toString(DATEhelper.nowDate(), "yyyy-MM-dd"),id);
     }
 
     @Override

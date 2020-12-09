@@ -6,6 +6,9 @@
 package com.pro1e.UI.chill;
 
 import com.pro1e.UI.MainF;
+import com.pro1e.UI.QLnhiemvuPN;
+import com.pro1e.UI.ThongKeForm;
+import com.pro1e.UI.pnkhachmoiTD;
 
 /**
  *
@@ -88,6 +91,11 @@ public class ListMenu2 extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText(" SỰ KIỆN");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         add(jPanel1);
@@ -101,7 +109,12 @@ public class ListMenu2 extends javax.swing.JPanel {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText(" BÁO CÁO");
+        jLabel8.setText(" BÁO CÁO CÔNG VIỆC");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel8, java.awt.BorderLayout.CENTER);
 
         add(jPanel2);
@@ -115,7 +128,12 @@ public class ListMenu2 extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText(" THÀNH VIÊN");
+        jLabel9.setText("KHÁCH MỜI");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         jPanel5.add(jLabel9, java.awt.BorderLayout.CENTER);
 
         add(jPanel5);
@@ -123,8 +141,20 @@ public class ListMenu2 extends javax.swing.JPanel {
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         m.openNol();
-        m.curChucnang("Phần mềm quản lý sự kiện");
+        m.SetcurCN("Phần mềm quản lý sự kiện");
     }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+       m.openForm(new pnkhachmoiTD());
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        m.openForm(new ThongKeForm());
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+       m.openForm(new QLnhiemvuPN());
+    }//GEN-LAST:event_jLabel2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

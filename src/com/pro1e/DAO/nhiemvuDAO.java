@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 public class nhiemvuDAO implements DAOhelper<NhiemVu, Integer> {
 
     private final String insert_sql = "insert into NHIEMVU(TENNVU,IDGIAIDOAN,MOTA,TRANGTHAI,FILEIN, NGAYBATDAU,DEADLINE,TGHT )\n"
-            + "VALUES (?,?,?,?,?,?,?)";
+            + "VALUES (?,?,?,?,?,?,?,?)";
     private final String update_sql = "update NHIEMVU  set TENNVU=?,IDGIAIDOAN=?,MOTA=?,TRANGTHAI=?,FILEIN=?, NGAYBATDAU=?,DEADLINE=?,TGHT=? where IDNVU =?";
     private final String delete_sql = "delete from NHIEMVU  IDNVU=?";
     private final String select_all = "select * from NHIEMVU order by IDNVU desc";
@@ -26,12 +26,12 @@ public class nhiemvuDAO implements DAOhelper<NhiemVu, Integer> {
 
     @Override
     public int insert(NhiemVu e) {
-        return JDBChelper.update(insert_sql, e.getTenNVu(), e.getIdGiaiDoan(), e.getMoTa(), e.getFileIn(), e.getNgatBD(), e.getDeaLine(), e.getTGHT());
+        return JDBChelper.update(insert_sql, e.getTenNVu(), e.getIdGiaiDoan(), e.getMoTa(), e.isTrangThai(),e.getFileIn(), e.getNgatBD(), e.getDeaLine(), e.getTGHT());
     }
 
     @Override
     public int update(NhiemVu e) {
-        return JDBChelper.update(update_sql, e.getTenNVu(), e.getIdGiaiDoan(), e.getMoTa(), e.getFileIn(), e.getNgatBD(), e.getDeaLine(), e.getTGHT(), e.getiDNVu());
+        return JDBChelper.update(update_sql, e.getTenNVu(), e.getIdGiaiDoan(), e.getMoTa(),e.isTrangThai(), e.getFileIn(), e.getNgatBD(), e.getDeaLine(), e.getTGHT(), e.getiDNVu());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class nhiemvuDAO implements DAOhelper<NhiemVu, Integer> {
                 nvu.setFileIn(rs.getString("FILEIN"));
                 nvu.setNgatBD(rs.getString("NGAYBATDAU"));
                 nvu.setDeaLine(rs.getString("DEADLINE"));
-                nvu.setTGHT(rs.getString("TGHT"));
+                nvu.setTGHT(rs.getInt("TGHT"));
                 nvu.setTrangThai(rs.getBoolean("TRANGTHAI"));
                 lsnhiemvu.add(nvu);
             }

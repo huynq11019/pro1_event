@@ -12,7 +12,7 @@ package duan1.model;
 public class Chitieu {
     private int idChiTieu, idNvu;
     private Float soTien;
-    private String mota, ngayCT;
+    private String mota, ngayCT,Tennv ,tennvu;
     private int idNvien;
 
     public Chitieu() {
@@ -73,6 +73,27 @@ public class Chitieu {
 
     public void setIdNvien(int idNvien) {
         this.idNvien = idNvien;
+    }
+
+    public String getTennv() {
+        return Tennv;
+    }
+
+    public void setTennv(String Tennv) {
+        this.Tennv = Tennv;
+    }
+
+    public String getTennvu() {
+        return tennvu;
+    }
+
+    public void setTennvu(String tennvu) {
+        this.tennvu = tennvu;
+    }
+
+    @Override
+    public String toString() {
+        return "Chitieu{" + "idChiTieu=" + idChiTieu + ", idNvu=" + idNvu + ", soTien=" + soTien + ", mota=" + mota + ", ngayCT=" + ngayCT + ", Tennv=" + Tennv + ", tennvu=" + tennvu + ", idNvien=" + idNvien + '}';
     }
 
   

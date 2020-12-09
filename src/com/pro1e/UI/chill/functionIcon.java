@@ -83,6 +83,7 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
     public void showcn(java.awt.event.MouseEvent evt) {
         auth.curSUKIEN = ev;
         root.openForm(new QLnhiemvuPN());
+        root.changeColor();
     }
 //    ImageIcon iconF (String path){
 //        try {
@@ -113,7 +114,7 @@ public class functionIcon extends javax.swing.JPanel implements ActionListener {
         setLayout(new java.awt.BorderLayout());
 
         lbicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_ios_development_50px.png"))); // NOI18N
+        lbicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_event_50px.png"))); // NOI18N
         add(lbicon, java.awt.BorderLayout.CENTER);
 
         lbtencn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

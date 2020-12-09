@@ -18,14 +18,14 @@ import java.util.List;
  * @author nguye
  */
 public class ChechListDAO implements DAOhelper<CheckListNV, Integer>{
-    private final String insert_sql = "INSERT INTO CHECHLIST VALUES(?,?,?,?)";
+    private final String insert_sql = "INSERT INTO CHECHLIST VALUES(?,?,?)";
     private final String update_sql = "UPDATE CHECHLIST SET IDNVU=?, NOIDUNGCL=?, TRANGTHAI=? where IDCLIST=?";
     private final String delete_sql ="delete from CHECHLIST where IDCLIST=?";
     private final String select_all = "select * from CHECHLIST";
     private final String select_byid = "select * from CHECHLIST where IDCLIST=?";
     @Override
     public int insert(CheckListNV e) {
-    return JDBChelper.update(insert_sql, e.getIdCList(),e.getIdNVu(),e.getNoiDungCList(), e.isTrangThai());
+    return JDBChelper.update(insert_sql, e.getIdNVu(),e.getNoiDungCList(), e.isTrangThai());
    }
 
     @Override
@@ -56,10 +56,10 @@ public class ChechListDAO implements DAOhelper<CheckListNV, Integer>{
             ResultSet rs= JDBChelper.query(sql, args);
             while(rs.next()){
                 CheckListNV CL= new CheckListNV();
-                CL.setIdCList(rs.getInt("IDCMT"));
+                CL.setIdCList(rs.getInt("IDCLIST"));
                 CL.setIdNVu(rs.getInt("IDNVU"));
-                CL.setNoiDungCList(rs.getString("TENNV"));
-                CL.setTrangThai(rs.getBoolean("NOIDUNG"));
+                CL.setNoiDungCList(rs.getString("NOIDUNGCL"));
+                CL.setTrangThai(rs.getBoolean("TRANGTHAI"));
                 listKM.add(CL);
             }
             rs.getStatement().getConnection().close();
@@ -71,7 +71,8 @@ public class ChechListDAO implements DAOhelper<CheckListNV, Integer>{
 
     @Override
     public List<CheckListNV> selectbysomething(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String sql = "select * from CHECHLIST where IDNVU=?";
+      return selectbySQL(sql, id);
     }
     
 }

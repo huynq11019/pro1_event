@@ -14,14 +14,14 @@ import java.util.List;
  * @author nguye
  */
 public class ComMentDAO implements DAOhelper<Comment, Integer>{
-    private final String insert_sql = "INSERT INTO COMMENT VALUES(?,?,?,?,?)";
+    private final String insert_sql = "INSERT INTO COMMENT(IDNVU, TENNV, NOIDUNG, THOIGIAN) VALUES(?,?,?,getdate())";
     private final String update_sql = "UPDATE COMMENT SET IDNVU=?, TENNV=?, NOIDUNG=?, THOIGIAN=? where IDCMT=?";
     private final String delete_sql ="delete from COMMENT where IDCMT=?";
     private final String select_all = "select * from COMMENT";
-    private final String select_byid = "select * from COMMENT where IDCMT=?";
+    private final String select_byid = "select * from COMMENT where IDNVU=? order by IDCMT desc";
     @Override
     public int insert(Comment e) {
-    return JDBChelper.update(insert_sql, e.getIdCMT(),e.getIdNVu(),e.getTenNV(),e.getNoiDung(),e.getThoigian());
+    return JDBChelper.update(insert_sql, e.getIdNVu(),e.getTenNV(),e.getNoiDung());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ComMentDAO implements DAOhelper<Comment, Integer>{
 
     @Override
     public List<Comment> selectbysomething(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return selectbySQL(select_byid, id);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.pro1e.utils;
 
+import com.pro1e.UI.pnKhachmoi;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -25,4 +26,5 @@ public class magbox {
     {
         return JOptionPane.showInputDialog(parent, mesage, noty, JOptionPane.INFORMATION_MESSAGE);
     }
+  
 }

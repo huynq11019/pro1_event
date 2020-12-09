@@ -13,12 +13,12 @@ public class NhanVien {
     
     private String  matKhau, tenNV, Hinh, idBan, Email, sdt, cmnd;
    
-    private int quyen, manv, idphong ;
+    private int quyen, manv ;
 
     public NhanVien() {
     }
 
-    public NhanVien(String matKhau, String tenNV, String Hinh, String idBan, String Email, String sdt, String cmnd, int quyen, int manv, int idphong) {
+    public NhanVien(String matKhau, String tenNV, String Hinh, String idBan, String Email, String sdt, String cmnd, int quyen, int manv) {
         this.matKhau = matKhau;
         this.tenNV = tenNV;
         this.Hinh = Hinh;
@@ -28,15 +28,7 @@ public class NhanVien {
         this.cmnd = cmnd;
         this.quyen = quyen;
         this.manv = manv;
-        this.idphong = idphong;
     }
-
-    
-    
-    
- 
-
-
 
     public String getMatKhau() {
         return matKhau;
@@ -109,20 +101,6 @@ public class NhanVien {
     public void setManv(int manv) {
         this.manv = manv;
     }
-
-    public int getIdphong() {
-        return idphong;
-    }
-
-    public void setIdphong(int idphong) {
-        this.idphong = idphong;
-    }
-
-   
-    public String toString1() {
-        return "NhanVien{" + "matKhau=" + matKhau + ", tenNV=" + tenNV + ", Hinh=" + Hinh + ", idBan=" + idBan + ", Email=" + Email + ", sdt=" + sdt + ", cmnd=" + cmnd + ", quyen=" + quyen + ", manv=" + manv + ", idphong=" + idphong + '}';
-    }
-
     @Override
     public String toString() {
         return  idBan+" - "+tenNV ;

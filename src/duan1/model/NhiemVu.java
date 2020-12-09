@@ -12,25 +12,27 @@ import java.util.Date;
  * @author nguye
  */
 public class NhiemVu {
-    private int iDNVu, idGiaiDoan;
+    private int iDNVu, idGiaiDoan, TGHT;
     private String tenNVu,moTa,fileIn;
     private boolean trangThai ;
-    private String ngatBD, DeaLine,TGHT; // ngày bắt đầu, ngày kết thúc, ngày hoàn thành
+    private String ngatBD, DeaLine; // ngày bắt đầu, ngày kết thúc, ngày hoàn thành
 
     public NhiemVu() {
     }
 
-    public NhiemVu(int iDNVu, int idGiaiDoan, String tenNVu, String moTa, String fileIn, boolean trangThai, String ngatBD, String DeaLine, String TGHT) {
+    public NhiemVu(int iDNVu, int idGiaiDoan, int TGHT, String tenNVu, String moTa, String fileIn, boolean trangThai, String ngatBD, String DeaLine) {
         this.iDNVu = iDNVu;
         this.idGiaiDoan = idGiaiDoan;
+        this.TGHT = TGHT;
         this.tenNVu = tenNVu;
         this.moTa = moTa;
         this.fileIn = fileIn;
         this.trangThai = trangThai;
         this.ngatBD = ngatBD;
         this.DeaLine = DeaLine;
-        this.TGHT = TGHT;
     }
+
+ 
 
     public int getiDNVu() {
         return iDNVu;
@@ -96,13 +98,15 @@ public class NhiemVu {
         this.DeaLine = DeaLine;
     }
 
-    public String getTGHT() {
+    public int getTGHT() {
         return TGHT;
     }
 
-    public void setTGHT(String TGHT) {
+    public void setTGHT(int TGHT) {
         this.TGHT = TGHT;
     }
+
+  
 
     @Override
     public String toString() {

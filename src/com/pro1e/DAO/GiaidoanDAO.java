@@ -21,20 +21,20 @@ import java.util.logging.Logger;
  */
 public class GiaidoanDAO implements DAOhelper<GiaiDoan, Integer> {
 
-    private final String insert_sql = "insert into GIADOAN (IDSK, TENGD , NGAYBATDAU, DEADLINE,MOTA) values (?,?,?,?,?)";
-    private final String update_sql = "update GIADOAN set IDSK = ? , TENGD = ? , NGAYBATDAU = ? , DEADLINE = ?, MOTA=? where IDGIAODOAN = ?";
+    private final String insert_sql = "insert into GIADOAN (IDSK, TENGD , NGAYBATDAU, DEADLINE,MOTA,lockAt) values (?,?,?,?,?,?)";
+    private final String update_sql = "update GIADOAN set IDSK = ? , TENGD = ? , NGAYBATDAU = ? , DEADLINE = ?, MOTA=?,lockAt=? where IDGIAODOAN = ?";
     private final String delete_sql = "delete from  GIADOAN where IDGIAODOAN = ?";
     private final String select_all = "select * from GIADOAN";
     private final String select_byid = "select * from GIADOAN where IDGIAODOAN = ?";
 
     @Override
     public int insert(GiaiDoan e) {
-        return JDBChelper.update(insert_sql, e.getIdSK(), e.getTenGD(), e.getNgayBD(), e.getDeadLine(), e.getMota());
+        return JDBChelper.update(insert_sql, e.getIdSK(), e.getTenGD(), e.getNgayBD(), e.getDeadLine(), e.getMota(),e.getLockAT());
     }
 
     @Override
     public int update(GiaiDoan e) {
-        return JDBChelper.update(update_sql, e.getIdSK(), e.getTenGD(), e.getNgayBD(), e.getDeadLine(), e.getMota(), e.getIdGiaiDoan());
+        return JDBChelper.update(update_sql, e.getIdSK(), e.getTenGD(), e.getNgayBD(), e.getDeadLine(), e.getMota(),e.getLockAT(), e.getIdGiaiDoan());
     }
 
     @Override
@@ -72,6 +72,7 @@ public class GiaidoanDAO implements DAOhelper<GiaiDoan, Integer> {
                 gd.setMota(rs.getString("MOTA"));
                 gd.setNgayBD(rs.getString("NGAYBATDAU"));
                 gd.setDeadLine(rs.getString("DEADLINE"));
+                gd.setLockAT(rs.getString("lockAt"));
                 lst.add(gd);
             }
             rs.getStatement().getConnection().close();

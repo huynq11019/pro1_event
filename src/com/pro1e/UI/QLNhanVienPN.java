@@ -23,7 +23,7 @@ public class QLNhanVienPN extends javax.swing.JPanel {
     DefaultTableModel model;
     NhanvienDAO nvDAO = new NhanvienDAO();
     List<NhanVien> lsNV;
-    
+
     /**
      * Creates new form QLNhanVienForm
      */
@@ -31,7 +31,7 @@ public class QLNhanVienPN extends javax.swing.JPanel {
         initComponents();
         lsNV = nvDAO.selectall();
         loadNV();
-        
+
 //        lsNV = nvDAO.selectall();
 //        for (NhanVien nhanVien : lsNV) {
 //            System.out.println(nhanVien.toString());
@@ -49,7 +49,9 @@ public class QLNhanVienPN extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
-        btndanhsach = new javax.swing.JButton();
+        btnquenmk = new javax.swing.JButton();
+        btntaonhanvien = new javax.swing.JButton();
+        btndanhsach2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         pndanhsach = new javax.swing.JPanel();
         txttimkiem = new javax.swing.JTextField();
@@ -62,13 +64,33 @@ public class QLNhanVienPN extends javax.swing.JPanel {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btndanhsach.setBackground(new java.awt.Color(255, 51, 102));
-        btndanhsach.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btndanhsach.setForeground(new java.awt.Color(255, 255, 255));
-        btndanhsach.setText("TẠO NHÂN VIÊN");
-        btndanhsach.addActionListener(new java.awt.event.ActionListener() {
+        btnquenmk.setBackground(new java.awt.Color(255, 51, 102));
+        btnquenmk.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnquenmk.setForeground(new java.awt.Color(255, 255, 255));
+        btnquenmk.setText("quên mật khẩu");
+        btnquenmk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndanhsachActionPerformed(evt);
+                btnquenmkActionPerformed(evt);
+            }
+        });
+
+        btntaonhanvien.setBackground(new java.awt.Color(255, 51, 102));
+        btntaonhanvien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btntaonhanvien.setForeground(new java.awt.Color(255, 255, 255));
+        btntaonhanvien.setText("TẠO NHÂN VIÊN");
+        btntaonhanvien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntaonhanvienActionPerformed(evt);
+            }
+        });
+
+        btndanhsach2.setBackground(new java.awt.Color(255, 51, 102));
+        btndanhsach2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btndanhsach2.setForeground(new java.awt.Color(255, 255, 255));
+        btndanhsach2.setText("Gửi MAIL ");
+        btndanhsach2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndanhsach2ActionPerformed(evt);
             }
         });
 
@@ -76,13 +98,24 @@ public class QLNhanVienPN extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(btndanhsach, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 877, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btntaonhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 583, Short.MAX_VALUE)
+                .addComponent(btnquenmk, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btndanhsach2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btndanhsach, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btndanhsach2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btntaonhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnquenmk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -105,17 +138,17 @@ public class QLNhanVienPN extends javax.swing.JPanel {
 
         tbnhanvien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "TÊN ", "Mật Khẩu", "ID BAN", "SDT", "EMAIL", "QUYỀN", "CMND"
+                "TÊN ", "ID BAN", "SDT", "EMAIL", "QUYỀN", "CMND"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -135,7 +168,6 @@ public class QLNhanVienPN extends javax.swing.JPanel {
             tbnhanvien.getColumnModel().getColumn(3).setResizable(false);
             tbnhanvien.getColumnModel().getColumn(4).setResizable(false);
             tbnhanvien.getColumnModel().getColumn(5).setResizable(false);
-            tbnhanvien.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -170,15 +202,28 @@ public class QLNhanVienPN extends javax.swing.JPanel {
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, 1100, 580));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btndanhsachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndanhsachActionPerformed
-        new TAOnhanvien(this, true,new NhanVien()).setVisible(true); // if true is tạo nhân viên
-
-    }//GEN-LAST:event_btndanhsachActionPerformed
+    private void btnquenmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquenmkActionPerformed
+        int[] rowselect = tbnhanvien.getSelectedRows();
    
+        for (int i = 0; i < rowselect.length; i++) {
+           String mailTo = lsNV.get(rowselect[i]).getEmail();
+             String body = "  người dùng: " + lsNV.get(i).getTenNV() + "\n mật khẩu :" + lsNV.get(i).getMatKhau();
+               SEnDMAIL smail = new SEnDMAIL(mailTo);
+              smail.sendEmail("Thư thông báo mật khẩu EVENT MANAGER", body);
+        }
+      
+
+//       NhanVien getNV = lsNV.get(tbnhanvien.getSelectedRow());
+//        SEnDMAIL smail = new SEnDMAIL(getNV.getEmail());
+//        String body = "  người dùng: " + getNV.getTenNV() + "\n mật khẩu :" + getNV.getMatKhau();
+//        smail.sendEmail("Thư thông báo mật khẩu EVENT MANAGER", body);
+//        magbox.mgbox(this, "đã gửi thư thông báo mật khẩu về mail");
+    }//GEN-LAST:event_btnquenmkActionPerformed
+
     private void txttimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txttimkiemKeyReleased
-    
+
     private void txttimkiemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyTyped
         if (txttimkiem.getText().equals("")) {
             lsNV = nvDAO.selectall();
@@ -197,27 +242,46 @@ public class QLNhanVienPN extends javax.swing.JPanel {
     private void tbnhanvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbnhanvienMouseClicked
         if (evt.getClickCount() == 2) {
             new TAOnhanvien(this, false, lsNV.get(tbnhanvien.rowAtPoint(evt.getPoint()))).setVisible(true);
-       }
+        }
     }//GEN-LAST:event_tbnhanvienMouseClicked
-    void taoANDload(){
-          lsNV = nvDAO.selectall();
-          loadNV();
+
+    private void btntaonhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntaonhanvienActionPerformed
+        new TAOnhanvien(this, true, new NhanVien()).setVisible(true); // if true is tạo nhân viên
+    }//GEN-LAST:event_btntaonhanvienActionPerformed
+
+    private void btndanhsach2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndanhsach2ActionPerformed
+        int[] rowselect = tbnhanvien.getSelectedRows();
+        String mailTo = "";
+        for (int i = 0; i < rowselect.length; i++) {
+            mailTo += lsNV.get(rowselect[i]).getEmail();
+            if (i < rowselect.length - 1) {
+                mailTo += ",";
+            }
+        }
+        System.out.println(mailTo);
+        new SEnDMAIL(mailTo).setVisible(true);
+    }//GEN-LAST:event_btndanhsach2ActionPerformed
+    void taoANDload() {
+        lsNV = nvDAO.selectall();
+        loadNV();
     }
+
     void loadNV() {
-      
+
         model = (DefaultTableModel) tbnhanvien.getModel();
         model.setRowCount(0);
         for (NhanVien e : lsNV) {
             model.addRow(new Object[]{
-               
-                e.getTenNV(), e.getMatKhau(), e.getIdBan(), e.getSdt(), e.getEmail(), (e.getQuyen() == 0 ? "Quản lý" : "nhân viên"), e.getCmnd()
+                e.getTenNV(), e.getIdBan(), e.getSdt(), e.getEmail(), (e.getQuyen() == 0 ? "Quản lý" : "nhân viên"), e.getCmnd()
             });
-           // System.out.println(e.toString1());
+            // System.out.println(e.toString1());
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btndanhsach;
+    private javax.swing.JButton btndanhsach2;
+    private javax.swing.JButton btnquenmk;
+    private javax.swing.JButton btntaonhanvien;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;

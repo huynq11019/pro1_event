@@ -6,7 +6,9 @@
 package com.pro1e.UI;
 
 import com.pro1e.DAO.NhanvienDAO;
+import com.pro1e.UI.chill.PNlisstfile;
 import com.pro1e.utils.Xdate;
+import com.pro1e.utils.auth;
 import com.pro1e.utils.magbox;
 import duan1.model.NhiemVu;
 import duan1.model.NhanVien;
@@ -29,26 +31,30 @@ public class Pnnhiemvu extends javax.swing.JPanel {
      */
     public Pnnhiemvu(Pngiaidoan parent, NhiemVu nv) {
         initComponents();
-        loadCbox();
         this.nvu = nv;
         this.parent = parent;
         innit(nv);
+         loadCbox(nv.getiDNVu());
     }
 
     void innit(NhiemVu nv) {
         cntennv.setText(nv.getTenNVu());
+        cntennv.setSelected(nv.isTrangThai());
         if (nv.getMoTa().length() > 50) {
             lbmote.setText(nv.getMoTa().substring(0, 50) + "....");
         } else {
             lbmote.setText(nv.getMoTa());
         }
         System.out.println(nv.getDeaLine());
-        jdeadline.setDate(Xdate.todate(nv.getDeaLine(), "yyyy-MM-dd"));
+        if (nv.getDeaLine()!=null) {
+              jdeadline.setDate(Xdate.todate(nv.getDeaLine(), "yyyy-MM-dd"));
+        }
+        prsNhiemvu.setValue(nv.getTGHT());
 
     }
 
-    void loadCbox() {
-        lsNV = new NhanvienDAO().selectall();
+    void loadCbox(int idnvu) {
+        lsNV = new NhanvienDAO().selectbysomething(idnvu);
         dfcbox = (DefaultComboBoxModel) cbthanhvien.getModel();
         dfcbox.removeAllElements();
         lsNV.forEach(nhanVien -> {
@@ -57,6 +63,14 @@ public class Pnnhiemvu extends javax.swing.JPanel {
 
     }
 
+//    public void loadTiendo(int tongnv, int nvhoanthanh) {
+//
+//        if (tongnv > 0) {
+//            int tienDo = (nvhoanthanh * 100) / tongnv;
+//            // System.out.println(tongnv + "nvht " + nvHT + "tiến độ: " + tienDo);
+//            prsNhiemvu.setValue(tienDo);
+//        }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,9 +89,9 @@ public class Pnnhiemvu extends javax.swing.JPanel {
         cbthanhvien = new javax.swing.JComboBox<>();
         btnghim = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        prsNhiemvu = new javax.swing.JProgressBar();
 
-        setBackground(new java.awt.Color(153, 255, 255));
+        setBackground(new java.awt.Color(22, 160, 133));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
         setForeground(new java.awt.Color(153, 255, 255));
         setMinimumSize(new java.awt.Dimension(800, 130));
@@ -89,9 +103,21 @@ public class Pnnhiemvu extends javax.swing.JPanel {
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cntennv.setBackground(new java.awt.Color(22, 160, 133));
         cntennv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cntennv.setForeground(new java.awt.Color(255, 255, 255));
         cntennv.setText("Tên nhiệm vụ");
-        add(cntennv, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 146, -1));
+        cntennv.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cntennvItemStateChanged(evt);
+            }
+        });
+        cntennv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cntennvMouseClicked(evt);
+            }
+        });
+        add(cntennv, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 230, -1));
 
         jLabel1.setText("Miêu tả công việc: ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 33, -1, -1));
@@ -106,7 +132,7 @@ public class Pnnhiemvu extends javax.swing.JPanel {
             }
         });
         add(btnreadmore, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 11, -1, 40));
-        add(jdeadline, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 200, 30));
+        add(jdeadline, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 200, 40));
 
         jLabel3.setText("DEAD LINE :");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
@@ -121,7 +147,7 @@ public class Pnnhiemvu extends javax.swing.JPanel {
                 btnghimActionPerformed(evt);
             }
         });
-        add(btnghim, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, -1, -1));
+        add(btnghim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, -1, 40));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_user_24px_1.png"))); // NOI18N
         jButton1.setText("add");
@@ -130,32 +156,55 @@ public class Pnnhiemvu extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, 40));
 
-        jProgressBar1.setValue(60);
-        add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 430, 20));
+        prsNhiemvu.setBackground(new java.awt.Color(0, 204, 0));
+        prsNhiemvu.setValue(60);
+        add(prsNhiemvu, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 380, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // mở nhiệm vụ chi tiết
         if (evt.getClickCount() == 2) {
-            new TAOnhiemvu(parent, nvu, false).setVisible(true);
+            auth.curPNnhiemvu = this;
+            new TAOnhiemvu(parent, this, false).setVisible(true);
         }
     }//GEN-LAST:event_formMouseClicked
 
     private void btnghimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnghimActionPerformed
-        btnghim.setToolTipText(magbox.prompt(this, "đường dẫn file"));
+     new PNlisstfile(nvu).setVisible(true);
     }//GEN-LAST:event_btnghimActionPerformed
 
     private void btnreadmoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreadmoreActionPerformed
-        new TAOnhiemvu(parent, nvu, false).setVisible(true);
+        auth.curPNnhiemvu = this;
+        new TAOnhiemvu(parent, this, false).setVisible(true);
     }//GEN-LAST:event_btnreadmoreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       TAOphancong tpc = new TAOphancong();
-       tpc.setLocation(this.getX(), this.getY());
-       tpc.setVisible(true);
+        TAOphancong tpc = new TAOphancong(nvu.getiDNVu());
+        //  tpc.setLocation(this.getX(), this.getY());
+//        System.out.println(this.getX()+" + "+this.getY());
+        tpc.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cntennvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cntennvItemStateChanged
+
+    }//GEN-LAST:event_cntennvItemStateChanged
+
+    private void cntennvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cntennvMouseClicked
+        nvu.setTrangThai(cntennv.isSelected());
+        if (parent.nvdao.update(nvu) > 0) {
+            System.err.println(cntennv.isSelected());
+//            parent.loadNVu();
+            if (cntennv.isSelected()) {
+                parent.nvHT++;
+            } else if (!cntennv.isSelected()) {
+                parent.nvHT--;
+            }
+
+            parent.loadTiendo();
+        }
+    }//GEN-LAST:event_cntennvMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,8 +215,8 @@ public class Pnnhiemvu extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JProgressBar jProgressBar1;
     private com.toedter.calendar.JDateChooser jdeadline;
     private javax.swing.JLabel lbmote;
+    public javax.swing.JProgressBar prsNhiemvu;
     // End of variables declaration//GEN-END:variables
 }

@@ -49,15 +49,20 @@ public class MainF extends javax.swing.JFrame {
     public void openSUKIEN() {
         //kiểm soát menu list
 
-        openMenu(new ListMenu2(this));
-        pnthongtin.setBackground(new Color(8, 3, 12));
-        pnauth.setBackground(new Color(8, 3, 12));
+//        openMenu(new ListMenu2(this));
+//        pnthongtin.setBackground(new Color(8, 3, 12));
+//        pnauth.setBackground(new Color(8, 3, 12));
         pnbackground.removeAll();
         openForm(new QLsukienPN(this));
 
     }
-
-  public  void curChucnang(String curCN) {
+public void changeColor(){
+    openMenu(new ListMenu2(this));
+        pnthongtin.setBackground(new Color(8, 3, 12));
+        pnauth.setBackground(new Color(8, 3, 12));
+//        pnbackground.removeAll();
+}
+  public  void SetcurCN(String curCN) {
         lbchucnang.setText(curCN);
     }
 
@@ -68,7 +73,7 @@ public class MainF extends javax.swing.JFrame {
 
     }
 
-    void openMenu(JPanel chill) {
+   public void openMenu(JPanel chill) {
         pnMEONU.removeAll();
         pnMEONU.add(chill);
         pnMEONU.validate();
@@ -97,13 +102,14 @@ public class MainF extends javax.swing.JFrame {
         pnthongtin = new javax.swing.JPanel();
         lbtenv = new javax.swing.JLabel();
         lbquyen = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pnMEONU = new javax.swing.JPanel();
         title = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         lbchucnang = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
         pnbackground = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -129,16 +135,27 @@ public class MainF extends javax.swing.JFrame {
         pnauth.setLayout(new java.awt.GridLayout(1, 0));
 
         pnthongtin.setBackground(new java.awt.Color(0, 102, 204));
-        pnthongtin.setLayout(new java.awt.GridLayout(2, 0));
+        pnthongtin.setLayout(new java.awt.BorderLayout(5, 0));
 
         lbtenv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbtenv.setForeground(new java.awt.Color(255, 255, 255));
         lbtenv.setText("mã nhân viên + mã phòng ban");
-        pnthongtin.add(lbtenv);
+        lbtenv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbtenvMouseClicked(evt);
+            }
+        });
+        pnthongtin.add(lbtenv, java.awt.BorderLayout.CENTER);
 
+        lbquyen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbquyen.setForeground(new java.awt.Color(255, 255, 51));
+        lbquyen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbquyen.setText("Quyền");
-        pnthongtin.add(lbquyen);
+        pnthongtin.add(lbquyen, java.awt.BorderLayout.PAGE_END);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_user_24px.png"))); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(24, 13));
+        pnthongtin.add(jLabel1, java.awt.BorderLayout.LINE_START);
 
         pnauth.add(pnthongtin);
 
@@ -146,7 +163,7 @@ public class MainF extends javax.swing.JFrame {
 
         pnMEONU.setBackground(new java.awt.Color(0, 102, 204));
         pnMEONU.setLayout(new java.awt.BorderLayout());
-        pnNAV.add(pnMEONU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 187, 590));
+        pnNAV.add(pnMEONU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 180, 590));
 
         getContentPane().add(pnNAV, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 670));
 
@@ -195,22 +212,18 @@ public class MainF extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        lbchucnang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbchucnang.setText("chức năng hiện tại");
+
+        jToolBar1.setRollover(true);
+
         jButton1.setText("Home");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jButton2.setText("sk");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        lbchucnang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbchucnang.setText("chức năng hiện tại");
+        jToolBar1.add(jButton1);
 
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
@@ -219,26 +232,21 @@ public class MainF extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleLayout.createSequentialGroup()
                 .addGap(182, 182, 182)
                 .addComponent(lbchucnang, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(268, 268, 268)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
+                .addGap(103, 103, 103)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 411, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(titleLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(lbchucnang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbchucnang)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, -1));
+        getContentPane().add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 40));
 
         pnbackground.setLayout(new java.awt.BorderLayout());
         getContentPane().add(pnbackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 1110, 640));
@@ -277,9 +285,9 @@ public class MainF extends javax.swing.JFrame {
         openNol();    // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        openSUKIEN();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void lbtenvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbtenvMouseClicked
+     new TAOnhanvien(null, false, auth.curentNVien).setVisible(true);
+    }//GEN-LAST:event_lbtenvMouseClicked
 
     /**
      * @param args the command line arguments
@@ -321,10 +329,11 @@ public class MainF extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lbchucnang;
     private javax.swing.JLabel lbquyen;
     private javax.swing.JLabel lbtenv;

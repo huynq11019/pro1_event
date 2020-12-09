@@ -6,10 +6,17 @@
 package com.pro1e.UI;
 
 import com.pro1e.DAO.NhanvienDAO;
+import com.pro1e.UI.chill.rememberLOGIN;
 import com.pro1e.utils.auth;
 import com.pro1e.utils.magbox;
 import duan1.model.NhanVien;
 import java.awt.Color;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
 
@@ -26,7 +33,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
-
+        fillData();
     }
 
     /**
@@ -46,7 +53,7 @@ public class LoginForm extends javax.swing.JFrame {
         txtPass = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        btncheck = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -125,13 +132,13 @@ public class LoginForm extends javax.swing.JFrame {
 
         jSeparator2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jRadioButton1.setText("Nhớ mật khẩu");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        btncheck.setBackground(new java.awt.Color(255, 255, 255));
+        btncheck.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btncheck.setForeground(new java.awt.Color(204, 204, 204));
+        btncheck.setText("Nhớ mật khẩu");
+        btncheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                btncheckActionPerformed(evt);
             }
         });
 
@@ -185,7 +192,7 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btncheck, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -216,7 +223,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton1)
+                .addComponent(btncheck)
                 .addGap(18, 18, 18)
                 .addComponent(btndangnhap, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addContainerGap())
@@ -229,8 +236,8 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusGained
-        txtUser.setText("");
-        txtUser.setForeground(Color.black);
+//        txtUser.setText("");
+      //  txtUser.setForeground(Color.black);
     }//GEN-LAST:event_txtUserFocusGained
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
@@ -242,9 +249,9 @@ public class LoginForm extends javax.swing.JFrame {
         txtPass.setForeground(Color.black);
     }//GEN-LAST:event_txtPassFocusGained
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void btncheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncheckActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_btncheckActionPerformed
 
     private void jLabel7AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel7AncestorAdded
         // TODO add your handling code here:
@@ -265,7 +272,7 @@ public class LoginForm extends javax.swing.JFrame {
             String passString = new String(txtPass.getPassword());
             /////////get nhân viên
             NhanVien nv = nvDAO.selectByeDT(user);
-          //  System.out.println(nv.toString());
+            //  System.out.println(nv.toString());
             /////////////////
             if (nv == null) {
                 magbox.mgbox(this, "Tài khoản không tồn tại");
@@ -275,6 +282,7 @@ public class LoginForm extends javax.swing.JFrame {
                 auth.curentNVien = nv;
                 this.dispose();
                 new MainF().setVisible(true);
+                rememberPass(new rememberLOGIN(user, passString, btncheck.isSelected()));
             }
 
         }
@@ -285,6 +293,43 @@ public class LoginForm extends javax.swing.JFrame {
             return false;
         } else {
             return true;
+        }
+    }
+
+    void rememberPass(rememberLOGIN reme) {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            FileOutputStream fos = new FileOutputStream("mydata.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            //Bước 2: Ghi dữ liệu
+            oos.writeObject(reme);
+            //Bước 3: Đóng luồng
+            fos.close();
+            oos.close();
+            System.out.println("Done!");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    void fillData() {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            FileInputStream fis = new FileInputStream("mydata.bin");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            //Bước 2: Đọc dữ liệu
+            rememberLOGIN curIN = (rememberLOGIN) ois.readObject();
+            System.out.println(curIN.toString());
+            if (curIN.isRadio()) {
+                txtUser.setText(curIN.getUser());
+                txtPass.setText(curIN.getPass());
+                btncheck.setSelected(curIN.isRadio());
+            }
+            //Bước 3: Đóng luồng
+            fis.close();
+            ois.close();
+        } catch (Exception ex) {
+            System.out.println("Loi doc file: " + ex);
         }
     }
 
@@ -325,6 +370,7 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btncheck;
     private javax.swing.JButton btndangnhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -333,7 +379,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPasswordField txtPass;

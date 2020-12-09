@@ -67,6 +67,11 @@ public class Comment {
     public void setThoigian(String thoigian) {
         this.thoigian = thoigian;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" + "idCMT=" + idCMT + ", idNVu=" + idNVu + ", tenNV=" + tenNV + ", noiDung=" + noiDung + ", thoigian=" + thoigian + '}';
+    }
     
 
     

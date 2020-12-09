@@ -9,10 +9,13 @@ import com.pro1e.DAO.BanDAO;
 import com.pro1e.DAO.NhanvienDAO;
 import com.pro1e.DAO.PhanCongDAO;
 import com.pro1e.helper.FunctionHelper;
+import com.pro1e.utils.auth;
 import duan1.model.Ban;
 import duan1.model.NhanVien;
+import duan1.model.NhiemVu;
 import duan1.model.PhanCong;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,43 +25,50 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TAOphancong extends javax.swing.JDialog {
 
-    NhanVien curNhanvien;
+    NhiemVu curNhiemVu;
+    int idNvu;
     NhanvienDAO nvDAO = new NhanvienDAO();
     BanDAO banDAO = new BanDAO();
+    PhanCongDAO phancongDAO = new PhanCongDAO();
     Ban curBan;
     PhanCong curPhancong;
-    PhanCongDAO phancongDAO = new PhanCongDAO();
-    List<NhanVien> listNV;
     List<PhanCong> listPC;
     List<Ban> listBan;
     DefaultTableModel dfnhanvien;
     DefaultComboBoxModel<Ban> dfBan;
 
-    public TAOphancong() {
+    public TAOphancong(int idNvu) {
         initComponents();
-       listBan = banDAO.selectall();
-        FunctionHelper.setColumnWidths(jTable1, 50,160);
+        this.idNvu = idNvu;
+
+        listBan = banDAO.selectbyPhong(auth.curentPhong.getIDPhong());
+        FunctionHelper.setColumnWidths(tbthanhvien, 50, 245);
+        //  offlOC();
         loadcbox();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
 
     }
 
     void loadcbox() {
         dfBan = (DefaultComboBoxModel) cbban.getModel();
-
         dfBan.removeAllElements();
+        dfBan.addElement(new Ban(1, "ALL", "ALL"));
         for (Ban ban : listBan) {
             dfBan.addElement(ban);
 
         }
     }
 
-    void loadNV(String ban) {
-        dfnhanvien = (DefaultTableModel) jTable1.getModel();
-        listNV = nvDAO.selectByBan(ban);
+    void loadNV(String ban, int idnvu) {
+        dfnhanvien = (DefaultTableModel) tbthanhvien.getModel();
+        listPC = phancongDAO.selectONexists(ban, idnvu);
         dfnhanvien.setRowCount(0);
-        for (NhanVien nhanVien : listNV) {
-            dfnhanvien.addRow(new Object[]{});
+        for (PhanCong pc : listPC) {
+            System.out.println(pc.toString());
+            dfnhanvien.addRow(new Object[]{
+                (pc.getIdNVu() == 0 ? false : true), pc.getTenNV()
+            });
         }
     }
 
@@ -71,15 +81,20 @@ public class TAOphancong extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbthanhvien = new javax.swing.JTable();
         cbban = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        lbloc = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PHÂN CÔNG CÔNG VIỆC CHO NHÂN VIÊN");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbthanhvien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -105,46 +120,82 @@ public class TAOphancong extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        tbthanhvien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbthanhvienMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbthanhvien);
+        if (tbthanhvien.getColumnModel().getColumnCount() > 0) {
+            tbthanhvien.getColumnModel().getColumn(0).setResizable(false);
+            tbthanhvien.getColumnModel().getColumn(1).setResizable(false);
         }
 
         cbban.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbban.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbanItemStateChanged(evt);
+            }
+        });
 
-        jLabel1.setText("Lọc theo ban");
+        lbloc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbloc.setText("Lọc theo ban");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(lbloc, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbban, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(3, 3, 3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbloc, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbbanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbanItemStateChanged
+        Ban thisBan = (Ban) dfBan.getSelectedItem();
+        String idBan = "ALL";
+        if (thisBan != null) {
+            System.out.println(thisBan.toString1());
+            idBan = thisBan.getIdban();
+        }
+        loadNV(idBan, idNvu);
+    }//GEN-LAST:event_cbbanItemStateChanged
+
+    private void tbthanhvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbthanhvienMouseClicked
+        int index = tbthanhvien.rowAtPoint(evt.getPoint());
+        int idNhanvien = listPC.get(index).getIdNVien();
+        boolean chon = (boolean) tbthanhvien.getValueAt(index, 0);
+        if (chon) {
+            if (phancongDAO.insert(new PhanCong( idNhanvien,idNvu, "")) > 0) {
+                System.out.println("đã thêm nhân viên vào nhiệm vụ");
+            }
+        } else {
+            // xóa nhân viên khỏi nhiệm vụ
+            if (phancongDAO.delete2(idNhanvien, idNvu)>0) {
+                System.out.println("đã xóa phân công nhân viên khỏi nhiệm vụ");
+            }
+        }
+    }//GEN-LAST:event_tbthanhvienMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -176,7 +227,7 @@ public class TAOphancong extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TAOphancong dialog = new TAOphancong();
+                TAOphancong dialog = new TAOphancong(1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -190,9 +241,8 @@ public class TAOphancong extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbban;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbloc;
+    private javax.swing.JTable tbthanhvien;
     // End of variables declaration//GEN-END:variables
 }
