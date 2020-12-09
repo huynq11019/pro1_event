@@ -11,7 +11,7 @@ package duan1.model;
  */
 public class KhachmoiTD {
     private  int idSK, idKM;
-
+//    private String tenKM;
     public KhachmoiTD() {
     }
 
@@ -19,7 +19,6 @@ public class KhachmoiTD {
         this.idSK = idSK;
         this.idKM = idKM;
     }
-
     public int getIdSK() {
         return idSK;
     }
@@ -34,6 +33,11 @@ public class KhachmoiTD {
 
     public void setIdKM(int idKM) {
         this.idKM = idKM;
+    }
+
+    @Override
+    public String toString() {
+        return "KhachmoiTD{" + "idSK=" + idSK + ", idKM=" + idKM + '}';
     }
     
 }

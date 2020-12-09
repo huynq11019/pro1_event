@@ -16,7 +16,7 @@ import java.util.List;
  * @author nguye
  */
 public class KhachMoiDAO implements DAOhelper<KhachMoi, Integer>{
-     private final String insert_sql = "INSERT INTO KHACMOI VALUES(?,?,?,?)";
+     private final String insert_sql = "insert into KHACMOI(TENKM,EMAIL,SDT,GHICHU) values(?,?,?,?)";
     private final String update_sql = "UPDATE KHACMOI SET  TENKM=?, EMAIL=?, SDT=?, GHICHU=? WHERE IDKM=?";
     private final String delete_sql ="delete from KHACMOI where IDKM=?";
     private final String select_all = "select * from KHACMOI";
@@ -30,7 +30,7 @@ public class KhachMoiDAO implements DAOhelper<KhachMoi, Integer>{
 
     @Override
     public int update(KhachMoi e) {
-    return JDBChelper.update(update_sql,    e.getTenKM(),e.getEmail(),e.getSdt(),e.getGhiChu(),e.getIdKhachMoi());
+    return JDBChelper.update(update_sql,   e.getTenKM(),e.getEmail(),e.getSdt(),e.getGhiChu(),e.getIdKhachMoi());
     }
 
     @Override
@@ -73,9 +73,18 @@ public class KhachMoiDAO implements DAOhelper<KhachMoi, Integer>{
 
     @Override
     public List<KhachMoi> selectbysomething(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "select * from KHACMOI inner join KHACMOITD on KHACMOI.IDKM = KHACMOITD.IDKM where IDSK = ?";
+        return selectbySQL(sql,id);
     }
-
-  
+public List<KhachMoi> timKiemKM (String keyW){
+    String sql = "select * from KHACMOI where TENKM like N'%"+keyW+"%' or SDT like '%"+keyW+"%' or EMAIL like '%"+keyW+"%'";
+    return selectbySQL(sql);
+}
+    public static void main(String[] args) {
+        KhachMoiDAO kmdao = new KhachMoiDAO();
+        for (KhachMoi khachMoi : kmdao.selectall()) {
+            System.out.println(khachMoi.toString());    
+        }
+    }
     
 }

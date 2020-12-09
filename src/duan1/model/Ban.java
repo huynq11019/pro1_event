@@ -22,11 +22,17 @@ public class Ban {
     public Ban() {
     }
 
+
+    public String toString1() {
+        return "Ban{" + "idPhong=" + idPhong + ", tenBan=" + tenBan + ", idban=" + idban + '}';
+    }
+
     @Override
     public String toString() {
         return this.tenBan; 
     }
-
+   
+     
     public String getIdban() {
         return idban;
     }

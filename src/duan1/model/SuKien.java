@@ -82,9 +82,6 @@ public class SuKien {
 
     @Override
     public String toString() {
-        return "SuKien{" + "IDSK=" + IDSK + ", idPhong=" + idPhong + ", tenSK=" + tenSK + ", moTa=" + moTa + ", ngayTao=" + ngayTao + ", ngayKetThuc=" + ngayKetThuc + '}';
-    }
-
-    
-    
+        return tenSK;
+    } 
 }

@@ -97,18 +97,17 @@ public class TAOgiaodan extends javax.swing.JDialog {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jdatebd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(txttengd, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jdatekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jdatebd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txttengd, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jdatekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -166,8 +165,12 @@ public class TAOgiaodan extends javax.swing.JDialog {
             gd.setIdSK(auth.curSUKIEN.getIDSK());
             gd.setTenGD(txttengd.getText());
             gd.setMota(txtmota.getText());
-            gd.setNgayBD(Xdate.toString(jdatebd.getDate(), "yyyy-MM-dd"));
-            gd.setDeadLine(Xdate.toString(jdatekt.getDate(), "yyyy-MM-dd"));
+            if (jdatebd.getDate() != null) {
+                gd.setNgayBD(Xdate.toString(jdatebd.getDate(), "yyyy-MM-dd"));
+            }
+            if (jdatekt.getDate()!=null) {
+                  gd.setDeadLine(Xdate.toString(jdatekt.getDate(), "yyyy-MM-dd"));
+            }
             gd.toString();
             return gd;
         }
@@ -175,7 +178,7 @@ public class TAOgiaodan extends javax.swing.JDialog {
     }
 
     boolean checkblank() {
-        if (txttengd.getText().equals("") || jdatebd.getDate() == null) {
+        if (txttengd.getText().equals("")) {
             return false;
         }
         return true;

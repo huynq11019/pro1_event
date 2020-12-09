@@ -16,7 +16,7 @@ import java.util.List;
  * @author nguye
  */
 public class KhachMoiTD_DAO implements DAOhelper<KhachmoiTD, Integer>{
-    private final String insert_sql = "INSERT INTO KHACMOITD VALUES(?,?)";
+    private final String insert_sql = "insert into KHACMOITD(IDSK,IDKM) values(?,?)";
     private final String update_sql = "UPDATE KHACMOITD SET IDSK=? where IDKM=?";
     private final String delete_sql ="delete from KHACMOITD where IDKM=?";
     private final String select_all = "select * from KHACMOITD";
@@ -24,8 +24,6 @@ public class KhachMoiTD_DAO implements DAOhelper<KhachmoiTD, Integer>{
     @Override
     public int insert(KhachmoiTD e) {
     return JDBChelper.update(insert_sql, e.getIdSK(),e.getIdKM());
-      
-        
     }
 
     @Override

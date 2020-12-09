@@ -10,20 +10,21 @@ package duan1.model;
  * @author nguye
  */
 public class KhachMoi {
-    private int idKhachMoi, idphong;
+    private int idKhachMoi;
     private String tenKM,email,sdt,ghiChu;
 
     public KhachMoi() {
     }
 
-    public KhachMoi(int idKhachMoi, int idphong, String tenKM, String email, String sdt, String ghiChu) {
+    public KhachMoi(int idKhachMoi, String tenKM, String email, String sdt, String ghiChu) {
         this.idKhachMoi = idKhachMoi;
-        this.idphong = idphong;
         this.tenKM = tenKM;
         this.email = email;
         this.sdt = sdt;
         this.ghiChu = ghiChu;
     }
+
+   
 
     public int getIdKhachMoi() {
         return idKhachMoi;
@@ -33,15 +34,7 @@ public class KhachMoi {
         this.idKhachMoi = idKhachMoi;
     }
 
-    public int getIdphong() {
-        return idphong;
-    }
-
-    public void setIdphong(int idphong) {
-        this.idphong = idphong;
-    }
-
-    public String getTenKM() {
+     public String getTenKM() {
         return tenKM;
     }
 
@@ -73,6 +66,11 @@ public class KhachMoi {
         this.ghiChu = ghiChu;
     }
 
-     
-    
+    @Override
+    public String toString() {
+        return tenKM;
+    }
+    public String toMail(){
+        return email;
+    }
 }

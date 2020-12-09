@@ -6,7 +6,10 @@
 package com.pro1e.UI.chill;
 
 import com.pro1e.UI.HomeMenu;
+import com.pro1e.UI.LoginForm;
 import com.pro1e.UI.MainF;
+import com.pro1e.utils.auth;
+import com.pro1e.utils.magbox;
 import java.awt.Color;
 
 /**
@@ -82,6 +85,9 @@ public class listMenu extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText(" ĐĂNG XUẤT");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel4MouseEntered(evt);
             }
@@ -111,6 +117,9 @@ public class listMenu extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText(" EXIT");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel8MouseEntered(evt);
             }
@@ -193,6 +202,18 @@ public class listMenu extends javax.swing.JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         pa.openForm(new HomeMenu(pa));
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+       pa.dispose();
+        auth.curentNVien = null;
+       new LoginForm().setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        if (magbox.confirm(pa, "bạn muốn thoát")) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -14,20 +14,25 @@ import java.util.Date;
 public class GiaiDoan {
     private int idGiaiDoan, idSK;
     private String tenGD, mota  ;
-    private String ngayBD,DeadLine ;
+    private String ngayBD,DeadLine,lockAT ;
 
     public GiaiDoan() {
     }
-
-    public GiaiDoan(int idGiaiDoan, int idSK, String tenGD, String mota, String ngayBD, String DeadLine) {
+    public GiaiDoan(int idgd, String tengd){
+        this.idGiaiDoan = idgd;
+        this.tenGD = tengd;
+    }
+    public GiaiDoan(int idGiaiDoan, int idSK, String tenGD, String mota, String ngayBD, String DeadLine, String lockAT) {
         this.idGiaiDoan = idGiaiDoan;
         this.idSK = idSK;
         this.tenGD = tenGD;
         this.mota = mota;
         this.ngayBD = ngayBD;
         this.DeadLine = DeadLine;
+        this.lockAT = lockAT;
     }
 
+  
     public int getIdGiaiDoan() {
         return idGiaiDoan;
     }
@@ -76,11 +81,20 @@ public class GiaiDoan {
         this.DeadLine = DeadLine;
     }
 
+    public String getLockAT() {
+        return lockAT;
+    }
+
+    public void setLockAT(String lockAT) {
+        this.lockAT = lockAT;
+    }
+
     @Override
     public String toString() {
-        return "GiaiDoan{" + "idGiaiDoan=" + idGiaiDoan + ", idSK=" + idSK + ", tenGD=" + tenGD + ", mota=" + mota + ", ngayBD=" + ngayBD + ", DeadLine=" + DeadLine + '}';
+        return tenGD;
     }
-    
+
+   
    
     
 }

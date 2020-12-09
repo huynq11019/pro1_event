@@ -10,20 +10,33 @@ package duan1.model;
  * @author nguye
  */
 public class PhanCong {
-    private int idNVien,idNVu;
+
+    private int idNVien, idNVu;
+   private String tenNV;
 
     public PhanCong() {
     }
 
-    public PhanCong(int idNVien, int idNVu) {
+    public PhanCong(int idNVien, int idNVu, String tenNV) {
         this.idNVien = idNVien;
         this.idNVu = idNVu;
+        this.tenNV = tenNV;
     }
-    
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
+    }
+
     @Override
     public String toString() {
-        return "PhanCong{" + "idNVien=" + idNVien + ", idNVu=" + idNVu + '}';
+        return "PhanCong{" + "idNVien=" + idNVien + ", idNVu=" + idNVu + ", tenNV=" + tenNV + '}';
     }
+
+ 
 
     public int getIdNVien() {
         return idNVien;
@@ -40,5 +53,5 @@ public class PhanCong {
     public void setIdNVu(int idNVu) {
         this.idNVu = idNVu;
     }
-    
+
 }

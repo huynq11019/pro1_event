@@ -6,6 +6,7 @@
 package com.pro1e.utils;
 
 import com.pro1e.UI.MainF;
+import com.pro1e.UI.Pnnhiemvu;
 import com.pro1e.UI.QLnhiemvuPN;
 import com.pro1e.UI.QLsukienPN;
 import duan1.model.GiaiDoan;
@@ -22,14 +23,14 @@ public class auth {
     //phòng ban hiện tại
     public static Phong curentPhong = new Phong(1, 1, "PHòng QHDH", 0);
     
-    public static NhanVien curentNVien = new NhanVien("123", "huy   ", "5", "TC", "2", "1", "1", 0, 0, 1);
+    public static NhanVien curentNVien = new NhanVien("123", "huy   ", "5", "TC", "2", "1", "1", 0, 3);
     public static SuKien curSUKIEN;
     public static GiaiDoan curGiaiDoan;
     
     public static QLsukienPN curQLsukien;
     public static MainF curmain;
     public static QLnhiemvuPN curqlnhiemvu;
-
+    public static Pnnhiemvu curPNnhiemvu;
     public static boolean islogin() {
         return auth.curentNVien != null;
     }
@@ -38,8 +39,8 @@ public class auth {
         auth.curentNVien = null;
     }
 
-    public static int IDPHONGnv() {
-        return auth.curentNVien.getIdphong();
-    }
+//    public static int IDPHONGnv() {
+//        return auth.curentNVien.getIdphong();
+//    }
 
 }

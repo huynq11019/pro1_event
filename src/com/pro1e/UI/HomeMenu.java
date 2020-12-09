@@ -20,6 +20,7 @@ MainF pa;
     public HomeMenu(MainF parent) {
         initComponents();
         pa=parent;
+        parent.SetcurCN("HOME");
 //        for (int i = 0; i < 10; i++) {
 //             pnbeck.add(new functionIcon("icons8_google_earth_50px.png", "Chức năng A"));
 //        }
@@ -92,6 +93,11 @@ MainF pa;
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_reception_50px.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         pnsukien1.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -150,6 +156,11 @@ MainF pa;
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_pay_by_cash_50px.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         pnsukien4.add(jLabel9, java.awt.BorderLayout.CENTER);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -182,12 +193,17 @@ MainF pa;
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pro1e/icon/icons8_settings_50px_1.png"))); // NOI18N
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         pnsukien6.add(jLabel13, java.awt.BorderLayout.CENTER);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("CÀI ĐẶT");
+        jLabel14.setText("PHÒNG BAN");
         pnsukien6.add(jLabel14, java.awt.BorderLayout.PAGE_END);
 
         pnbeck.add(pnsukien6);
@@ -199,17 +215,33 @@ MainF pa;
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
        pa.openSUKIEN();
-       pa.curChucnang("CHỨC NĂNG QUẢN LÝ SỰ KIỆN");
-      
+       pa.SetcurCN("CHỨC NĂNG QUẢN LÝ SỰ KIỆN");
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         pa.openForm(new QLNhanVienPN());
+        pa.SetcurCN("QUẢN LÝ NHAN VIÊN");
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
        pa.openForm(new QlNhanLucNgoaiForm());
+       pa.SetcurCN("NHÂN LỰC NGOÀI");
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+      pa.openForm(new Pnchitieu());
+      pa.SetcurCN("LỊCH SỬ CHI TIÊU");
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        pa.openForm(new pnPHONG());
+        pa.SetcurCN("QUẢN LÝ BAN");
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+       pa.openForm(new pnKhachmoi());
+       pa.SetcurCN("KhÁCH MỜI");
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

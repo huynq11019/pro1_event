@@ -34,7 +34,7 @@ public class TAOnhanvien extends javax.swing.JDialog {
 
     public TAOnhanvien(QLNhanVienPN pa, boolean sate, NhanVien e) {
         initComponents();
-        this.state = sate;
+        this.state = sate; // state == true là tạo nhân viên == false là cập nhật nhân viên
         this.pa = pa;
         this.setLocationRelativeTo(null);
         listBAN = bandao.selectall();
@@ -43,6 +43,13 @@ public class TAOnhanvien extends javax.swing.JDialog {
         if (!sate) {
             fillNVien(e);
             btntaonv.setText("cập nhật");
+            
+        }
+        if (pa==null) {
+            cbban.setVisible(false);
+            cbquyen.setVisible(false);
+            lbban.setVisible(false);
+            lbhinh.setVisible(false);
         }
 
     }
@@ -76,9 +83,9 @@ public class TAOnhanvien extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         lbhinh = new javax.swing.JLabel();
         cbban = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        lbban = new javax.swing.JLabel();
         cbquyen = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        lbquyen = new javax.swing.JLabel();
         btntaonv = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtpass = new javax.swing.JPasswordField();
@@ -99,11 +106,11 @@ public class TAOnhanvien extends javax.swing.JDialog {
 
         cbban.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TK", "TC", "TT" }));
 
-        jLabel6.setText("BAN ");
+        lbban.setText("BAN ");
 
         cbquyen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý ", "nhân viên" }));
 
-        jLabel7.setText("QUYỀN");
+        lbquyen.setText("QUYỀN");
 
         btntaonv.setText("TẠO");
         btntaonv.addActionListener(new java.awt.event.ActionListener() {
@@ -136,10 +143,10 @@ public class TAOnhanvien extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                                    .addComponent(lbquyen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbban, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbquyen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,11 +195,11 @@ public class TAOnhanvien extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbban, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(lbban))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbquyen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(lbquyen))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btntaonv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,14 +225,19 @@ public class TAOnhanvien extends javax.swing.JDialog {
                     this.dispose();
                     pa.taoANDload();
                 } else {
-                    magbox.mgbox(this, "lỗi tạo nhân viên");
+                    magbox.mgbox(this, "email đã đăng ký nhân viên từ trước ");
                 }
             } else {
                 if (nvDAO.update(getNhanvien()) > 0) {
                     this.dispose();
-                    pa.taoANDload();
+                    if (pa!=null) {
+                         pa.taoANDload();
+                    }else{
+                        auth.curentNVien = getNhanvien();
+                        auth.curmain.openNol();
+                    }
                 }
-                System.err.println(getNhanvien().toString1());
+                System.err.println(getNhanvien().toString());
             }
         } else {
             magbox.mgbox(this, "thông tin nhập vào chưa đúng");
@@ -247,7 +259,7 @@ public class TAOnhanvien extends javax.swing.JDialog {
 
     NhanVien getNhanvien() {
         NhanVien nv = new NhanVien();
-        nv.setIdphong(auth.curentPhong.getIDPhong()); // ban.get
+       
         nv.setCmnd("3212311");
         nv.setEmail(txtemail.getText());
         nv.setHinh(lbhinh.getToolTipText());
@@ -255,7 +267,6 @@ public class TAOnhanvien extends javax.swing.JDialog {
         nv.setQuyen(cbquyen.getSelectedIndex());
         nv.setTenNV(txttenv.getText());
         Ban ban    =  (Ban) cbban.getSelectedItem();
-
         nv.setIdBan(ban.getIdban());
         if (!state) { //state == true là tạo state == false là update
             nv.setManv(e.getManv()); // mã nhân viên tự động
@@ -270,7 +281,7 @@ public class TAOnhanvien extends javax.swing.JDialog {
         txtemail.setText(e.getEmail());
         txtsdt.setText(e.getSdt());
         txtpass.setText(e.getMatKhau());
-        cbopan.setSelectedItem(e.getIdBan());
+       // cbopan.setSelectedItem(e.getIdBan());
         cbquyen.setSelectedIndex(e.getQuyen());
     }
     /**
@@ -323,10 +334,10 @@ public class TAOnhanvien extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lbban;
     private javax.swing.JLabel lbhinh;
+    private javax.swing.JLabel lbquyen;
     private javax.swing.JTextField txtemail;
     private javax.swing.JPasswordField txtpass;
     private javax.swing.JTextField txtsdt;
